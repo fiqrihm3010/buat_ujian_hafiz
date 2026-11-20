@@ -717,7 +717,7 @@ const find=id=>ALLT.find(t=>t.id===id);
 function viewHome(){
   const ts=totalStars();
   app.innerHTML=`<div class="stack">
-   <div class="top">${mascot(84)}<div><h1>Belajar Agama Yuk!</h1><div class="sub">Persiapan ujian kelas 3 SD</div></div></div>
+   <div class="top">${mascot(84)}<div><h1>Belajar Agama Yuk!</h1><div class="sub">Persiapan uian buat hafiz!</div></div></div>
    <div class="card s-all"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>Bintang kamu</b><b>${ts} dari ${MAXSTARS}</b></div><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${MAXSTARS}" aria-valuenow="${ts}"><i style="width:${Math.round(ts/MAXSTARS*100)}%"></i></div></div>
    <div class="how"><div><b>1</b>Baca materinya</div><div><b>2</b>Kerjakan kuis</div><div><b>3</b>Kumpulkan bintang</div></div>
    <div class="subjects">${SUBJECTS.map(s=>{const st=s.topics.reduce((a,t)=>a+getStars(t.id),0),mx=s.topics.length*3;return `<button class="subj ${s.cls}" data-go="${s.id}"><span class="ar-n" lang="ar" dir="rtl">${s.ar}</span><span class="nm">${s.name}</span><span class="meta">${s.topics.length} materi · ${st}/${mx} bintang</span><span class="bar"><i style="width:${Math.round(st/mx*100)}%"></i></span></button>`;}).join('')}</div>
