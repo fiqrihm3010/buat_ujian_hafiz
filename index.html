@@ -1,0 +1,850 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Belajar Agama Yuk</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Baloo+2:wght@600;800&family=Nunito:wght@400;700;800&display=swap">
+<style>
+/* Layout: satu kolom lebar 720px, kartu besar, tombol tebal seperti mainan. Warna per pelajaran: Fiqih biru, Aqidah hijau, Do'a jingga, Juz'amma ungu. */
+:root{
+  --bg:#EEF6FF; --card:#FFFFFF; --ink:#1B2547; --muted:#53608A; --edge:#C9D8F2;
+  --good:#12945F; --good-soft:#DDF6EA; --bad:#D63A3A; --bad-soft:#FFE3E3;
+  --star:#FFB703; --star-off:#D5DDEE; --arab-bg:#FFFBEA; --arab-edge:#F0DFA0;
+  --fiqih:#2563EB; --fiqih-soft:#DCE8FF; --fiqih-t:#2563EB;
+  --aqidah:#0E8F5B; --aqidah-soft:#D8F4E6; --aqidah-t:#0B7A4D;
+  --doa:#C95500; --doa-soft:#FFE8D1; --doa-t:#B34A00;
+  --juz:#7C3AED; --juz-soft:#EAE0FF; --juz-t:#6B2BD9;
+  --f-head:'Baloo 2','Nunito',system-ui,sans-serif;
+  --f-body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-ar:'Amiri','Noto Naskh Arabic','Traditional Arabic',serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1730; --card:#19244A; --ink:#EEF2FF; --muted:#AAB6DE; --edge:#2D3C70;
+  --good-soft:#123A2B; --bad-soft:#4A1D1D; --star-off:#34426F; --arab-bg:#232A4F; --arab-edge:#3A4580;
+  --fiqih-soft:#1B2E63; --fiqih-t:#8DB3FF; --aqidah-soft:#123D2E; --aqidah-t:#5FD8A0;
+  --doa-soft:#4A2C12; --doa-t:#FFA862; --juz-soft:#36236B; --juz-t:#BFA2FF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1730; --card:#19244A; --ink:#EEF2FF; --muted:#AAB6DE; --edge:#2D3C70;
+  --good-soft:#123A2B; --bad-soft:#4A1D1D; --star-off:#34426F; --arab-bg:#232A4F; --arab-edge:#3A4580;
+  --fiqih-soft:#1B2E63; --fiqih-t:#8DB3FF; --aqidah-soft:#123D2E; --aqidah-t:#5FD8A0;
+  --doa-soft:#4A2C12; --doa-t:#FFA862; --juz-soft:#36236B; --juz-t:#BFA2FF; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:19px;line-height:1.55;
+  padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+*{box-sizing:border-box}
+.s-fiqih{--c:var(--fiqih);--cs:var(--fiqih-soft);--ct:var(--fiqih-t)}
+.s-aqidah{--c:var(--aqidah);--cs:var(--aqidah-soft);--ct:var(--aqidah-t)}
+.s-doa{--c:var(--doa);--cs:var(--doa-soft);--ct:var(--doa-t)}
+.s-juz{--c:var(--juz);--cs:var(--juz-soft);--ct:var(--juz-t)}
+.s-all{--c:#2563EB;--cs:var(--fiqih-soft);--ct:var(--fiqih-t)}
+#app{max-width:720px;margin:0 auto;padding-top:20px}
+h1,h2,h3{font-family:var(--f-head);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:2.4rem;font-weight:800}
+h2{font-size:1.9rem;font-weight:800}
+h3{font-size:1.3rem;font-weight:800}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--star);outline-offset:3px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;align-items:center;gap:12px}
+.muted{color:var(--muted)}
+
+/* tombol */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--c);color:#fff;border:0;border-radius:18px;
+  padding:12px 22px;min-height:54px;font-family:var(--f-head);font-weight:800;font-size:1.25rem;text-decoration:none;
+  box-shadow:0 5px 0 rgba(0,0,0,.28);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
+.btn.ghost{background:var(--card);color:var(--ct);border:3px solid var(--edge);box-shadow:0 4px 0 var(--edge)}
+.btn.block{width:100%}
+.back{align-self:flex-start;padding:8px 16px;min-height:44px;font-size:1.05rem}
+
+/* kepala halaman */
+.top{display:flex;align-items:center;gap:14px}
+.top .mascot{flex:none}
+.sub{font-size:1.1rem;color:var(--muted);font-weight:700}
+.card{background:var(--card);border:3px solid var(--edge);border-radius:24px;padding:18px;box-shadow:0 5px 0 var(--edge)}
+.bar{height:16px;background:var(--star-off);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--star);border-radius:99px;transition:width .5s}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.how div{background:var(--card);border:3px solid var(--edge);border-radius:18px;padding:10px;text-align:center;font-weight:800;font-size:.95rem;line-height:1.3}
+.how b{display:grid;place-items:center;width:34px;height:34px;margin:0 auto 6px;border-radius:50%;background:var(--star);color:#3a2a00;font-family:var(--f-head)}
+
+/* kartu pelajaran */
+.subjects{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.subjects{grid-template-columns:1fr}}
+.subj{display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--cs);border:3px solid var(--c);border-radius:24px;padding:16px;box-shadow:0 6px 0 var(--c)}
+.subj:active{transform:translateY(4px);box-shadow:0 2px 0 var(--c)}
+.subj .nm{font-family:var(--f-head);font-weight:800;font-size:1.7rem;color:var(--ct);line-height:1.1}
+.subj .ar-n{font-family:var(--f-ar);font-size:1.6rem;color:var(--ct);line-height:1.4}
+.subj .meta{font-weight:800;font-size:.95rem;color:var(--muted)}
+.subj .bar{height:12px}
+
+/* daftar materi */
+.list{display:flex;flex-direction:column;gap:12px}
+.item{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:3px solid var(--edge);border-radius:20px;padding:12px 14px;box-shadow:0 4px 0 var(--edge)}
+.item:active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
+.num{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--c);color:#fff;font-family:var(--f-head);font-weight:800;font-size:1.3rem}
+.item .tt{flex:1;min-width:0}
+.item .tt b{display:block;font-family:var(--f-head);font-size:1.25rem;line-height:1.2}
+.item .tt span{font-size:.9rem;color:var(--muted);font-weight:700}
+.stars{display:flex;gap:2px;flex:none}
+.stars svg{width:24px;height:24px}
+
+/* materi */
+.lesson{border-color:var(--c);box-shadow:0 5px 0 var(--c)}
+.lesson .stack{gap:14px}
+.lesson p b{color:var(--ct)}
+.lesson ul,.lesson ol{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:8px}
+.lesson li::marker{color:var(--ct);font-weight:800}
+.tip{display:flex;gap:12px;align-items:flex-start;background:#FFF1B8;color:#4a3800;border-radius:18px;padding:12px 14px;font-weight:800}
+.tip svg{flex:none;width:34px;height:34px}
+:root[data-theme="dark"] .tip{background:#4A3E10;color:#FFE9A0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tip{background:#4A3E10;color:#FFE9A0}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){.grid2{grid-template-columns:1fr}}
+.mini{background:var(--cs);border-radius:18px;padding:10px 12px;display:flex;gap:10px;align-items:center;min-width:0}
+.mini .n{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--c);color:#fff;font-family:var(--f-head);font-weight:800}
+.mini .tx{min-width:0;line-height:1.25}
+.mini .tx b{display:block;font-size:1.05rem}
+.mini .tx span{font-size:.92rem;color:var(--muted);font-weight:700}
+.mini .ar{margin-left:auto;font-family:var(--f-ar);font-size:1.45rem;line-height:1.4;color:var(--ct);direction:rtl;text-align:right;flex:none;max-width:48%}
+.doa{background:var(--arab-bg);border:3px solid var(--arab-edge);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.ar{font-family:var(--f-ar);direction:rtl;text-align:right}
+.doa .ar{font-size:clamp(1.7rem,6.2vw,2.3rem);line-height:2.1}
+.lat{color:var(--ct);font-weight:800;font-style:italic;font-size:1.05rem}
+.lbl{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;font-weight:800;color:var(--muted)}
+.arti{font-weight:700}
+.ayat{display:flex;gap:12px;padding:12px 0;border-top:2px dashed var(--edge)}
+.ayat:first-child{border-top:0}
+.ayat .num{width:38px;height:38px;font-size:1.05rem}
+.ayat .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.ayat .ar{font-size:clamp(1.5rem,5.6vw,2rem);line-height:2}
+.ayat .lat{font-size:1rem}
+.ayat .arti{font-size:.98rem;font-weight:700;color:var(--muted)}
+.ar-i{font-family:var(--f-ar);font-size:1.3em;line-height:1.5;unicode-bidi:isolate}
+.pager{display:flex;gap:12px;flex-wrap:wrap}
+.pager .btn{flex:1 1 200px}
+
+/* kuis */
+.qhead{display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+.dots i{height:12px;flex:1 1 12px;min-width:12px;max-width:40px;border-radius:99px;background:var(--star-off)}
+.dots i.on{background:var(--c)}
+.dots i.ok{background:var(--good)}
+.dots i.no{background:var(--bad)}
+.qcount{font-weight:800;color:var(--muted);flex:none}
+.question{font-family:var(--f-head);font-weight:800;font-size:1.55rem;line-height:1.25}
+.opts{display:flex;flex-direction:column;gap:12px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border:3px solid var(--edge);border-radius:18px;padding:12px 14px;min-height:60px;font-weight:800;font-size:1.15rem;box-shadow:0 4px 0 var(--edge);line-height:1.3}
+.opt .ltr{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--cs);color:var(--ct);font-family:var(--f-head);font-weight:800}
+.opt .ot{flex:1;min-width:0}
+.opt .mk{flex:none;width:28px;height:28px}
+.opt:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--good);background:var(--good-soft);box-shadow:0 4px 0 var(--good)}
+.opt.right .ltr{background:var(--good);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft);box-shadow:0 4px 0 var(--bad)}
+.opt.wrong .ltr{background:var(--bad);color:#fff}
+.opt.dim{opacity:.55}
+.fb{display:flex;gap:12px;align-items:flex-start;border-radius:20px;padding:14px;font-weight:700}
+.fb.ok{background:var(--good-soft);border:3px solid var(--good)}
+.fb.no{background:var(--bad-soft);border:3px solid var(--bad)}
+.fb h3{margin-bottom:2px}
+.fb svg{flex:none}
+.result{text-align:center;align-items:center}
+.bigstars{display:flex;gap:8px;justify-content:center}
+.bigstars svg{width:64px;height:64px}
+.bigstars svg.pop{animation:pop .6s both}
+.bigstars svg.pop:nth-child(2){animation-delay:.2s}
+.bigstars svg.pop:nth-child(3){animation-delay:.4s}
+@keyframes pop{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+.score{font-family:var(--f-head);font-weight:800;font-size:3rem;line-height:1}
+.conf{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}
+.conf i{position:absolute;top:-20px;width:12px;height:18px;border-radius:3px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.foot{font-size:.9rem;color:var(--muted);font-weight:700;text-align:center;padding:8px 6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.conf{display:none}}
+</style>
+
+<div id="app" aria-live="polite"></div>
+<noscript>Halaman ini butuh JavaScript supaya bisa dipakai belajar.</noscript>
+<script>
+/* ===== Pembantu penulisan materi ===== */
+const P=t=>({k:'p',t});
+const L=a=>({k:'ul',a});
+const OL=a=>({k:'ol',a});
+const TIP=t=>({k:'tip',t});
+const CARDS=a=>({k:'cards',a});          // a: [n, latin, arti, arab?]
+const DOA=(ar,lat,arti)=>({k:'doa',ar,lat,arti});
+const AYAT=a=>({k:'ayat',a});            // a: [arab, latin, arti]
+const Q=(q,right,wrongs,why)=>({q,right,wrongs,why});
+
+/* ===== FIQIH ===== */
+const FIQIH=[
+{t:'Arti Fiqih',s:'Apa itu fiqih?',b:[
+ P('Fiqih artinya <b>paham</b> atau <b>mengerti</b>. Fiqih adalah ilmu yang mengajarkan aturan ibadah dan perbuatan sehari-hari menurut ajaran Islam.'),
+ L(['Fiqih mengajarkan cara wudhu, salat, puasa, dan zakat.','Dengan fiqih, kita tahu mana yang boleh dan mana yang tidak boleh.','Dengan fiqih, ibadah kita jadi benar dan tertib.']),
+ TIP('Ingat: Fiqih = paham aturan ibadah.')],
+ q:[Q('Fiqih artinya…','paham atau mengerti',['menulis indah','berlari cepat','bernyanyi'],'Fiqih artinya paham atau mengerti.'),
+    Q('Fiqih mempelajari tentang…','aturan ibadah dan perbuatan sehari-hari',['cara memasak nasi','nama-nama planet','cara bermain bola'],'Fiqih mengajarkan aturan ibadah menurut Islam.'),
+    Q('Mana yang termasuk belajar fiqih?','belajar cara wudhu',['belajar menggambar','belajar berhitung','belajar bahasa Inggris'],'Wudhu adalah salah satu aturan ibadah, jadi masuk pelajaran fiqih.'),
+    Q('Kenapa kita belajar fiqih?','supaya ibadah kita benar',['supaya cepat besar','supaya dapat hadiah','supaya bisa menyanyi'],'Dengan paham aturannya, ibadah kita jadi benar.')]},
+
+{t:'Ulama Fiqih',s:'Empat imam mazhab',b:[
+ P('<b>Ulama</b> artinya orang yang berilmu agama. Ulama fiqih adalah ulama yang sangat paham aturan ibadah. Ada <b>4 imam besar</b> yang ilmunya diikuti banyak orang:'),
+ CARDS([['1','Imam Abu Hanifah','Ulama dari Kufah, Irak','أَبُو حَنِيفَةَ'],['2','Imam Malik','Ulama dari Madinah','مَالِك'],['3','Imam Syafi’i','Ulama yang banyak diikuti di Indonesia','الشَّافِعِي'],['4','Imam Ahmad bin Hanbal','Ulama dari Baghdad','أَحْمَد']]),
+ TIP('Kebanyakan muslim di Indonesia mengikuti mazhab Imam Syafi’i.')],
+ q:[Q('Ulama artinya…','orang yang berilmu agama',['orang yang pandai berlari','penjual buku','tukang kebun'],'Ulama adalah orang berilmu, terutama ilmu agama.'),
+    Q('Ada berapa imam mazhab yang terkenal?','4',['2','7','10'],'Ada 4 imam mazhab: Abu Hanifah, Malik, Syafi’i, dan Ahmad bin Hanbal.'),
+    Q('Imam yang banyak diikuti di Indonesia adalah…','Imam Syafi’i',['Imam Malik','Imam Bonjol','Imam Hanifah Kecil'],'Di Indonesia kebanyakan mengikuti mazhab Imam Syafi’i.'),
+    Q('Imam Abu Hanifah, Imam Malik, Imam Syafi’i, dan…','Imam Ahmad bin Hanbal',['Imam Bonjol','Imam Hasan','Imam Umar'],'Imam yang keempat adalah Imam Ahmad bin Hanbal.')]},
+
+{t:'Mukallaf dan Ciri-ciri Baligh',s:'Kapan wajib beribadah?',b:[
+ P('<b>Mukallaf</b> adalah orang yang sudah wajib menjalankan perintah Allah dan menjauhi larangan-Nya.'),
+ P('Syarat menjadi mukallaf ada 3:'),
+ OL(['<b>Islam</b>','<b>Baligh</b> (sudah dewasa menurut agama)','<b>Berakal</b> (sehat akalnya)']),
+ P('<b>Ciri-ciri baligh:</b>'),
+ L(['Anak laki-laki: mimpi basah, paling cepat umur 9 tahun.','Anak perempuan: haid, paling cepat umur 9 tahun.','Kalau belum ada tanda-tanda, maka baligh saat umur 15 tahun (hitungan tahun hijriah).']),
+ TIP('Setelah baligh, salat dan puasa menjadi wajib.')],
+ q:[Q('Orang yang sudah wajib menjalankan perintah agama disebut…','mukallaf',['musafir','mukmin kecil','muazin'],'Orang yang sudah wajib beribadah disebut mukallaf.'),
+    Q('Syarat mukallaf adalah…','Islam, baligh, berakal',['kaya, pintar, tinggi','tua, kuat, cepat','rajin, ramah, sopan'],'Tiga syaratnya: Islam, baligh, dan berakal.'),
+    Q('Salah satu ciri baligh pada anak perempuan adalah…','haid',['tumbuh tinggi','pandai membaca','punya banyak teman'],'Anak perempuan baligh ditandai dengan haid.'),
+    Q('Kalau belum ada tanda baligh, seseorang dianggap baligh saat umur…','15 tahun',['5 tahun','7 tahun','20 tahun'],'Batas umur baligh adalah 15 tahun hijriah.')]},
+
+{t:'Rukun Islam dan Rukun Iman',s:'5 rukun Islam, 6 rukun iman',b:[
+ P('<b>Rukun Islam</b> ada <b>5</b>:'),
+ CARDS([['1','Syahadat','Mengucapkan dua kalimat syahadat'],['2','Salat','Salat lima waktu'],['3','Zakat','Mengeluarkan zakat'],['4','Puasa','Puasa di bulan Ramadhan'],['5','Haji','Pergi haji bagi yang mampu']]),
+ P('<b>Rukun Iman</b> ada <b>6</b>:'),
+ CARDS([['1','Iman kepada Allah',''],['2','Iman kepada malaikat',''],['3','Iman kepada kitab-kitab Allah',''],['4','Iman kepada rasul-rasul Allah',''],['5','Iman kepada hari akhir',''],['6','Iman kepada qada dan qadar','Takdir baik dan buruk']]),
+ TIP('Rukun Islam = 5. Rukun Iman = 6.')],
+ q:[Q('Rukun Islam ada…','5',['3','6','10'],'Rukun Islam ada 5.'),
+    Q('Rukun iman ada…','6',['5','4','7'],'Rukun iman ada 6.'),
+    Q('Rukun Islam yang pertama adalah…','mengucapkan syahadat',['salat','zakat','haji'],'Yang pertama adalah syahadat.'),
+    Q('Rukun Islam yang ke-2 adalah…','salat',['puasa','zakat','haji'],'Urutannya: syahadat, salat, zakat, puasa, haji.'),
+    Q('Percaya kepada malaikat termasuk…','rukun iman',['rukun Islam','rukun wudhu','rukun salat'],'Iman kepada malaikat adalah rukun iman yang ke-2.'),
+    Q('Puasa di bulan Ramadhan termasuk…','rukun Islam',['rukun iman','sunnah wudhu','rukun haji'],'Puasa Ramadhan adalah rukun Islam yang ke-4.')]},
+
+{t:'Alat Bersuci dan Pembagian Air',s:'Pakai apa untuk bersuci?',b:[
+ P('Bersuci artinya membersihkan diri dari kotoran dan najis. <b>Alat bersuci</b> ada 4:'),
+ CARDS([['1','Air','Alat bersuci yang paling sering dipakai'],['2','Debu (tanah)','Dipakai untuk tayamum'],['3','Batu','Dipakai untuk istinja’ (membersihkan diri)'],['4','Samak','Untuk menyucikan kulit hewan']]),
+ P('<b>Air terbagi menjadi 4 macam:</b>'),
+ OL(['<b>Air suci dan menyucikan</b>: bisa dipakai wudhu dan mandi.','<b>Air suci tetapi tidak menyucikan</b>: suci, tapi tidak boleh dipakai wudhu.','<b>Air mutanajis</b>: air yang terkena najis.','<b>Air makruh</b>: suci dan menyucikan, tapi sebaiknya tidak dipakai.']),
+ TIP('Air yang paling baik untuk wudhu adalah air suci dan menyucikan.')],
+ q:[Q('Mana yang BUKAN alat bersuci?','parfum',['air','debu','batu'],'Alat bersuci: air, debu, batu, dan samak.'),
+    Q('Air terbagi menjadi berapa macam?','4',['2','6','9'],'Air terbagi 4 macam.'),
+    Q('Air yang terkena najis disebut…','air mutanajis',['air suci','air sumur','air dingin'],'Air yang terkena najis disebut air mutanajis.'),
+    Q('Debu dipakai untuk bersuci dalam…','tayamum',['wudhu','sarapan','berenang'],'Kalau tidak ada air, kita bersuci dengan debu (tayamum).')]},
+
+{t:'Air yang Suci dan Menyucikan',s:'7 macam air',b:[
+ P('Air yang suci dan menyucikan boleh dipakai untuk wudhu dan mandi. Ada <b>7 macam</b>:'),
+ CARDS([['1','Air hujan','Turun dari langit'],['2','Air laut','Walaupun asin, tetap suci'],['3','Air sungai','Mengalir di sungai'],['4','Air sumur','Dari dalam tanah'],['5','Air mata air','Keluar dari tanah'],['6','Air salju','Dari es yang mencair'],['7','Air embun','Tetesan di pagi hari']]),
+ TIP('Air teh, air kopi, dan air sirup suci, tapi TIDAK menyucikan, jadi tidak boleh dipakai wudhu.')],
+ q:[Q('Air yang suci dan menyucikan ada berapa macam?','7',['3','5','10'],'Ada 7 macam: hujan, laut, sungai, sumur, mata air, salju, dan embun.'),
+    Q('Air mana yang boleh dipakai untuk wudhu?','air sumur',['air teh','air kopi','air sirup'],'Air sumur termasuk air suci dan menyucikan.'),
+    Q('Air yang turun dari langit disebut…','air hujan',['air laut','air sumur','air embun'],'Air hujan turun dari langit.'),
+    Q('Apakah air laut boleh dipakai untuk wudhu?','boleh',['tidak boleh','boleh kalau sudah dimasak','hanya untuk minum'],'Air laut termasuk 7 macam air yang suci dan menyucikan.'),
+    Q('Air teh itu…','suci tapi tidak menyucikan',['suci dan menyucikan','najis','makruh'],'Air teh sudah berubah karena tercampur teh, jadi tidak menyucikan.')]},
+
+{t:'Pembagian Air Suci dan Menyucikan',s:'Makruh dan tidak makruh',b:[
+ P('Air yang suci dan menyucikan terbagi menjadi <b>2</b>:'),
+ OL(['<b>Tidak makruh</b>: boleh dipakai tanpa masalah. Contoh: air hujan, air sungai, air sumur.','<b>Makruh</b>: tetap suci dan menyucikan, tapi sebaiknya tidak dipakai di badan. Contoh: air yang dijemur terik matahari di wadah logam di tempat yang sangat panas (air musyammas).']),
+ P('<b>Makruh</b> artinya: lebih baik tidak dilakukan, tetapi kalau dilakukan tidak berdosa.'),
+ TIP('Makruh = sebaiknya ditinggalkan, tapi tidak berdosa.')],
+ q:[Q('Air suci dan menyucikan terbagi menjadi…','2 macam: makruh dan tidak makruh',['3 macam','5 macam','7 macam'],'Dibagi dua: tidak makruh dan makruh.'),
+    Q('Makruh artinya…','sebaiknya ditinggalkan, tapi tidak berdosa',['wajib dilakukan','haram dilakukan','boleh dilakukan sambil bermain'],'Makruh: lebih baik ditinggalkan, tapi tidak berdosa.'),
+    Q('Air yang dijemur di wadah logam di tempat sangat panas disebut air…','musyammas (makruh)',['mutanajis','mutlak','embun'],'Air musyammas termasuk air makruh.'),
+    Q('Air hujan termasuk air yang…','tidak makruh',['makruh','najis','tidak suci'],'Air hujan suci, menyucikan, dan tidak makruh.')]},
+
+{t:'Pengertian Dua Kulah',s:'Air yang banyak',b:[
+ P('<b>Dua kulah</b> adalah ukuran banyaknya air, kira-kira <b>216 liter</b>. Kalau dibuat bak, ukurannya sekitar <b>60 cm × 60 cm × 60 cm</b>.'),
+ L(['<b>Air kurang dari dua kulah</b> yang terkena najis menjadi najis, walaupun tidak berubah.','<b>Air dua kulah atau lebih</b> yang terkena najis tetap suci, selama tidak berubah.','Air berubah kalau <b>warna, rasa, atau baunya</b> berubah.']),
+ TIP('Air banyak (dua kulah) lebih kuat menahan najis.')],
+ q:[Q('Dua kulah kira-kira berapa liter?','216 liter',['2 liter','20 liter','2.000 liter'],'Dua kulah kira-kira 216 liter.'),
+    Q('Air kurang dari dua kulah terkena najis, maka air itu…','menjadi najis',['tetap suci','jadi air minum','jadi air hujan'],'Air sedikit langsung menjadi najis kalau terkena najis.'),
+    Q('Air lebih dari dua kulah terkena najis tapi tidak berubah, maka air itu…','tetap suci',['menjadi najis','hilang','berubah jadi air laut'],'Air banyak tetap suci selama tidak berubah.'),
+    Q('Tiga tanda air berubah karena najis adalah…','warna, rasa, bau',['bentuk, berat, suhu','suara, gerak, cahaya','panas, dingin, hangat'],'Perhatikan warna, rasa, dan baunya.'),
+    Q('Ukuran bak dua kulah sekitar…','60 × 60 × 60 cm',['10 × 10 × 10 cm','1 × 1 × 1 meter','5 × 5 × 5 cm'],'60 × 60 × 60 cm = 216 liter.')]}
+];
+
+/* ===== AQIDAH ===== */
+const AQIDAH=[
+{t:'Aqidul Iman',s:'Keyakinan di dalam hati',b:[
+ P('<b>Aqidah</b> artinya keyakinan di dalam hati. <b>Iman</b> artinya percaya dalam hati, diucapkan dengan lisan, dan dibuktikan dengan perbuatan.'),
+ P('Aqidul iman adalah keyakinan tentang <b>6 rukun iman</b>:'),
+ CARDS([['1','Allah','Tuhan yang menciptakan kita'],['2','Malaikat','Makhluk Allah dari cahaya'],['3','Kitab-kitab','Contoh: Al-Qur’an'],['4','Rasul-rasul','Contoh: Nabi Muhammad'],['5','Hari akhir','Hari kiamat'],['6','Qada dan qadar','Ketentuan Allah']]),
+ TIP('Iman itu dipercaya di hati, diucapkan, dan dilakukan.')],
+ q:[Q('Aqidah artinya…','keyakinan',['makanan','permainan','pelajaran menggambar'],'Aqidah artinya keyakinan di dalam hati.'),
+    Q('Rukun iman yang pertama adalah iman kepada…','Allah',['malaikat','rasul','hari akhir'],'Yang pertama adalah iman kepada Allah.'),
+    Q('Ada berapa rukun iman?','6',['3','5','8'],'Rukun iman ada 6.'),
+    Q('Al-Qur’an termasuk…','kitab Allah',['malaikat','rasul','hari akhir'],'Al-Qur’an adalah kitab Allah untuk Nabi Muhammad.'),
+    Q('Iman dibuktikan dengan…','hati, ucapan, dan perbuatan',['uang dan emas','baju baru','tidur siang'],'Iman dipercaya di hati, diucapkan, dan diamalkan.')]},
+
+{t:'Sifat Wajib bagi Allah 1–10',s:'Sifat yang pasti ada pada Allah',b:[
+ P('<b>Wajib</b> artinya pasti. Allah pasti memiliki sifat-sifat yang sempurna. Ini sifat wajib Allah nomor 1 sampai 10:'),
+ CARDS([['1','Wujud','Ada','الْوُجُودُ'],['2','Qidam','Terdahulu, tidak ada awalnya','الْقِدَمُ'],['3','Baqa’','Kekal, tidak ada akhirnya','الْبَقَاءُ'],['4','Mukhalafatuhu lil hawadits','Berbeda dengan makhluk','مُخَالَفَتُهُ لِلْحَوَادِثِ'],['5','Qiyamuhu binafsihi','Berdiri sendiri','قِيَامُهُ بِنَفْسِهِ'],['6','Wahdaniyyah','Esa, hanya satu','الْوَحْدَانِيَّةُ'],['7','Qudrat','Berkuasa','الْقُدْرَةُ'],['8','Iradat','Berkehendak','الْإِرَادَةُ'],['9','’Ilmu','Mengetahui','الْعِلْمُ'],['10','Hayat','Hidup','الْحَيَاةُ']]),
+ TIP('Cara ingat: Wujud, Qidam, Baqa’, Mukhalafatuhu, Qiyamuhu, Wahdaniyyah, Qudrat, Iradat, ’Ilmu, Hayat.')],
+ q:[Q('Sifat wajib Allah yang pertama adalah…','Wujud',['Qidam','Baqa’','Hayat'],'Nomor 1 adalah Wujud.'),
+    Q('Wujud artinya…','ada',['hilang','kecil','tidur'],'Wujud artinya Allah itu ada.'),
+    Q('Baqa’ artinya…','kekal',['baru','lemah','bodoh'],'Baqa’ artinya kekal, tidak akan binasa.'),
+    Q('Sifat Allah yang artinya “Esa, hanya satu” adalah…','Wahdaniyyah',['Qudrat','Iradat','Hayat'],'Wahdaniyyah artinya Allah Esa.'),
+    Q('Qudrat artinya…','berkuasa',['mendengar','melihat','berbicara'],'Qudrat artinya Allah berkuasa atas segala sesuatu.'),
+    Q('Sifat nomor 10 adalah…','Hayat',['Wujud','Qidam','Iradat'],'Nomor 10 adalah Hayat, artinya hidup.')]},
+
+{t:'Sifat Wajib bagi Allah 11–20',s:'Sifat wajib nomor 11 sampai 20',b:[
+ CARDS([['11','Sama’','Mendengar','السَّمْعُ'],['12','Bashar','Melihat','الْبَصَرُ'],['13','Kalam','Berfirman','الْكَلَامُ'],['14','Kaunuhu Qadiran','Keadaan-Nya Maha Kuasa','كَوْنُهُ قَادِرًا'],['15','Kaunuhu Muridan','Keadaan-Nya Maha Berkehendak','كَوْنُهُ مُرِيدًا'],['16','Kaunuhu ’Aliman','Keadaan-Nya Maha Mengetahui','كَوْنُهُ عَالِمًا'],['17','Kaunuhu Hayyan','Keadaan-Nya Maha Hidup','كَوْنُهُ حَيًّا'],['18','Kaunuhu Sami’an','Keadaan-Nya Maha Mendengar','كَوْنُهُ سَمِيعًا'],['19','Kaunuhu Bashiran','Keadaan-Nya Maha Melihat','كَوْنُهُ بَصِيرًا'],['20','Kaunuhu Mutakalliman','Keadaan-Nya Maha Berfirman','كَوْنُهُ مُتَكَلِّمًا']]),
+ TIP('Dengan sifat-sifat ini, kita tahu Allah selalu mendengar dan melihat kita.')],
+ q:[Q('Sama’ artinya…','mendengar',['melihat','berfirman','hidup'],'Sama’ = mendengar.'),
+    Q('Allah melihat semua yang kita lakukan. Ini sifat…','Bashar',['Sama’','Kalam','Qidam'],'Bashar = melihat.'),
+    Q('Kalam artinya…','berfirman',['mendengar','melihat','berkuasa'],'Kalam = berfirman.'),
+    Q('Kaunuhu Qadiran artinya…','keadaan-Nya Maha Kuasa',['keadaan-Nya Maha Melihat','keadaan-Nya Maha Hidup','keadaan-Nya Maha Mendengar'],'Qadiran berasal dari kata Qudrat (kuasa).'),
+    Q('Sifat nomor 20 adalah…','Kaunuhu Mutakalliman',['Sama’','Bashar','Kaunuhu Hayyan'],'Nomor 20 adalah Kaunuhu Mutakalliman.')]},
+
+{t:'Sifat Mustahil bagi Allah 1–10',s:'Sifat yang mustahil ada pada Allah',b:[
+ P('<b>Mustahil</b> artinya tidak mungkin. Sifat mustahil adalah lawan dari sifat wajib. Allah <b>tidak mungkin</b> memiliki sifat ini:'),
+ CARDS([['1','’Adam','Tidak ada','الْعَدَمُ'],['2','Huduts','Baru','الْحُدُوثُ'],['3','Fana’','Binasa','الْفَنَاءُ'],['4','Mumatsalatuhu lil hawadits','Sama dengan makhluk','الْمُمَاثَلَةُ لِلْحَوَادِثِ'],['5','’Adamul qiyam binafsihi','Tidak berdiri sendiri','عَدَمُ الْقِيَامِ بِالنَّفْسِ'],['6','Ta’addud','Berbilang, lebih dari satu','التَّعَدُّدُ'],['7','’Ajz','Lemah','الْعَجْزُ'],['8','Karahah','Terpaksa','الْكَرَاهَةُ'],['9','Jahl','Bodoh','الْجَهْلُ'],['10','Maut','Mati','الْمَوْتُ']]),
+ TIP('Setiap sifat wajib punya lawan. Wujud lawannya ’Adam. Qidam lawannya Huduts.')],
+ q:[Q('Mustahil artinya…','tidak mungkin',['pasti','boleh','mungkin'],'Mustahil = tidak mungkin.'),
+    Q('Lawan sifat Wujud (ada) adalah…','’Adam (tidak ada)',['Fana’','Maut','Jahl'],'Allah pasti ada, mustahil tidak ada.'),
+    Q('Huduts artinya…','baru',['kekal','kuat','pintar'],'Huduts = baru. Allah tidak baru, Allah Qidam (terdahulu).'),
+    Q('Allah tidak mungkin lemah. Lemah dalam bahasa Arab adalah…','’Ajz',['Qudrat','Hayat','Wujud'],'Lawan Qudrat (berkuasa) adalah ’Ajz (lemah).'),
+    Q('Allah tidak mungkin mati. Sifat mustahil ini disebut…','Maut',['Hayat','Baqa’','Ilmu'],'Lawan Hayat (hidup) adalah Maut (mati).'),
+    Q('Ta’addud artinya…','berbilang, lebih dari satu',['sendirian','kecil','terang'],'Allah Esa, mustahil berbilang.')]},
+
+{t:'Sifat Mustahil bagi Allah 11–20',s:'Lawan sifat nomor 11 sampai 20',b:[
+ CARDS([['11','Shamam','Tuli','الصَّمَمُ'],['12','’Amaa','Buta','الْعَمَى'],['13','Bukm','Bisu','الْبَكَمُ'],['14','Kaunuhu ’Ajizan','Keadaan-Nya lemah','كَوْنُهُ عَاجِزًا'],['15','Kaunuhu Mukrahan','Keadaan-Nya terpaksa','كَوْنُهُ مُكْرَهًا'],['16','Kaunuhu Jahilan','Keadaan-Nya bodoh','كَوْنُهُ جَاهِلًا'],['17','Kaunuhu Mayyitan','Keadaan-Nya mati','كَوْنُهُ مَيِّتًا'],['18','Kaunuhu Ashamma','Keadaan-Nya tuli','كَوْنُهُ أَصَمَّ'],['19','Kaunuhu A’ma','Keadaan-Nya buta','كَوْنُهُ أَعْمَى'],['20','Kaunuhu Abkam','Keadaan-Nya bisu','كَوْنُهُ أَبْكَمَ']]),
+ TIP('Allah Maha Mendengar, jadi mustahil tuli. Allah Maha Melihat, jadi mustahil buta.')],
+ q:[Q('Lawan Sama’ (mendengar) adalah…','Shamam (tuli)',['’Amaa (buta)','Bukm (bisu)','Maut (mati)'],'Sama’ lawannya Shamam.'),
+    Q('Lawan Bashar (melihat) adalah…','’Amaa (buta)',['Shamam (tuli)','Bukm (bisu)','Jahl (bodoh)'],'Bashar lawannya ’Amaa.'),
+    Q('Lawan Kalam (berfirman) adalah…','Bukm (bisu)',['Shamam (tuli)','’Amaa (buta)','’Ajz (lemah)'],'Kalam lawannya Bukm.'),
+    Q('Bukm artinya…','bisu',['tuli','buta','lemah'],'Bukm = bisu.'),
+    Q('Kaunuhu Jahilan artinya…','keadaan-Nya bodoh',['keadaan-Nya pintar','keadaan-Nya hidup','keadaan-Nya kuat'],'Mustahil bagi Allah bodoh karena Allah Maha Mengetahui.')]},
+
+{t:'Sifat Jaiz bagi Allah',s:'Allah boleh berbuat atau tidak',b:[
+ P('<b>Jaiz</b> artinya boleh. Sifat jaiz bagi Allah hanya <b>1</b>:'),
+ DOA('فِعْلُ كُلِّ مُمْكِنٍ أَوْ تَرْكُهُ','Fi’lu kulli mumkinin au tarkuhu','Allah boleh melakukan atau tidak melakukan apa saja yang mungkin.'),
+ L(['Allah boleh menurunkan hujan, atau tidak menurunkannya.','Allah boleh memberi rezeki, atau tidak memberinya.','Allah boleh menyembuhkan orang sakit, atau tidak.']),
+ TIP('Semua terserah Allah. Kita berdoa, berusaha, lalu bersyukur.')],
+ q:[Q('Jaiz artinya…','boleh',['pasti','mustahil','wajib'],'Jaiz = boleh.'),
+    Q('Sifat jaiz bagi Allah ada…','1',['3','10','20'],'Hanya ada 1 sifat jaiz bagi Allah.'),
+    Q('Siapa yang menentukan hujan turun atau tidak?','Allah',['awan','kita sendiri','pak guru'],'Semua terserah Allah. Allah boleh menurunkan atau tidak.'),
+    Q('Sifat jaiz bagi Allah artinya Allah boleh…','berbuat atau tidak berbuat',['lemah','mati','tidur'],'Allah boleh berbuat atau tidak berbuat sesuatu yang mungkin.')]},
+
+{t:'Sifat Wajib bagi Rasul',s:'4 sifat Nabi dan Rasul',b:[
+ P('Para Nabi dan Rasul pasti memiliki <b>4 sifat</b> ini:'),
+ CARDS([['1','Shiddiq','Jujur, selalu berkata benar','الصِّدْقُ'],['2','Amanah','Dapat dipercaya','الْأَمَانَةُ'],['3','Tabligh','Menyampaikan ajaran Allah','التَّبْلِيغُ'],['4','Fathanah','Cerdas','الْفَطَانَةُ']]),
+ TIP('Nabi Muhammad dijuluki Al-Amin, artinya orang yang dapat dipercaya.')],
+ q:[Q('Sifat wajib bagi rasul ada…','4',['2','5','20'],'Ada 4: Shiddiq, Amanah, Tabligh, Fathanah.'),
+    Q('Shiddiq artinya…','jujur',['cerdas','pelupa','pemalas'],'Shiddiq = jujur.'),
+    Q('Amanah artinya…','dapat dipercaya',['menyampaikan','jujur','cerdas'],'Amanah = dapat dipercaya.'),
+    Q('Rasul menyampaikan wahyu kepada umatnya. Ini sifat…','Tabligh',['Shiddiq','Fathanah','Amanah'],'Tabligh = menyampaikan.'),
+    Q('Fathanah artinya…','cerdas',['jujur','menyampaikan','dipercaya'],'Fathanah = cerdas.')]},
+
+{t:'Sifat Mustahil bagi Rasul',s:'Lawan dari 4 sifat wajib',b:[
+ P('Para Rasul <b>tidak mungkin</b> memiliki 4 sifat ini:'),
+ CARDS([['1','Kidzib','Bohong','الْكَذِبُ'],['2','Khianat','Tidak bisa dipercaya','الْخِيَانَةُ'],['3','Kitman','Menyembunyikan ajaran Allah','الْكِتْمَانُ'],['4','Baladah','Bodoh','الْبَلَادَةُ']]),
+ TIP('Lawan Shiddiq = Kidzib. Lawan Amanah = Khianat. Lawan Tabligh = Kitman. Lawan Fathanah = Baladah.')],
+ q:[Q('Lawan Shiddiq (jujur) adalah…','Kidzib (bohong)',['Khianat','Kitman','Baladah'],'Shiddiq lawannya Kidzib.'),
+    Q('Lawan Amanah adalah…','Khianat',['Kidzib','Kitman','Baladah'],'Amanah lawannya Khianat.'),
+    Q('Kitman artinya…','menyembunyikan ajaran Allah',['berbohong','bodoh','tidak jujur'],'Kitman = menyembunyikan. Lawan Tabligh.'),
+    Q('Baladah artinya…','bodoh',['bohong','khianat','menyembunyikan'],'Baladah = bodoh. Lawan Fathanah.'),
+    Q('Apakah Nabi pernah berbohong?','tidak mungkin',['kadang-kadang','sering','boleh'],'Bohong (Kidzib) mustahil bagi Rasul.')]},
+
+{t:'Sifat Jaiz bagi Rasul',s:'Rasul juga manusia biasa',b:[
+ P('Sifat jaiz bagi Rasul hanya <b>1</b>:'),
+ DOA('الْأَعْرَاضُ الْبَشَرِيَّةُ','Al-a’raadhul basyariyyah','Sifat-sifat manusia biasa yang tidak mengurangi derajat kerasulan.'),
+ L(['Rasul boleh makan dan minum.','Rasul boleh tidur dan merasa lelah.','Rasul boleh sakit dan menikah.']),
+ TIP('Rasul adalah manusia pilihan Allah, tapi tetap manusia biasa.')],
+ q:[Q('Sifat jaiz bagi Rasul ada…','1',['4','10','20'],'Hanya ada 1.'),
+    Q('Mana yang boleh terjadi pada Rasul?','makan dan minum',['berbohong','menyembunyikan wahyu','berkhianat'],'Makan dan minum adalah sifat manusia biasa.'),
+    Q('Rasul boleh merasa lelah dan sakit karena Rasul adalah…','manusia biasa pilihan Allah',['malaikat','jin','batu'],'Rasul manusia, tetapi dipilih Allah.'),
+    Q('Sifat jaiz bagi Rasul disebut…','’Aradhul basyariyyah',['Shiddiq','Kidzib','Tabligh'],'Sifat-sifat manusia biasa.')]},
+
+{t:'Nadhom Aqoidul Iman',s:'Menghafal dengan bernyanyi',b:[
+ P('<b>Nadhom</b> adalah syair atau bait-bait berirama yang dilagukan supaya mudah dihafal. Nadhom Aqoidul Iman membantu kita menghafal sifat-sifat Allah dan Rasul.'),
+ P('<b>Ringkasan yang harus diingat:</b>'),
+ L(['Sifat wajib bagi Allah: <b>20</b>','Sifat mustahil bagi Allah: <b>20</b>','Sifat jaiz bagi Allah: <b>1</b>','Sifat wajib bagi Rasul: <b>4</b>','Sifat mustahil bagi Rasul: <b>4</b>','Sifat jaiz bagi Rasul: <b>1</b>']),
+ TIP('Minta guru atau orang tuamu melagukan nadhomnya, lalu ikuti sama-sama. Menghafal sambil bernyanyi lebih cepat!')],
+ q:[Q('Nadhom adalah…','syair berirama untuk dihafal',['makanan khas','nama malaikat','alat salat'],'Nadhom adalah syair yang dilagukan agar mudah dihafal.'),
+    Q('Kenapa kita menghafal lewat nadhom?','supaya mudah diingat',['supaya cepat ngantuk','supaya bisa tidur','supaya bisa lari'],'Irama membuat hafalan lebih mudah.'),
+    Q('Sifat wajib bagi Allah ada…','20',['4','10','5'],'20 sifat wajib bagi Allah.'),
+    Q('Sifat wajib bagi Rasul ada…','4',['20','1','10'],'4 sifat: Shiddiq, Amanah, Tabligh, Fathanah.'),
+    Q('Sifat jaiz bagi Allah ada…','1',['20','4','6'],'Hanya 1.')]}
+];
+/* ===== DO'A-DO'A ===== */
+const DOAS=[
+{t:'Masuk Kamar Mandi',s:'Doa sebelum masuk',b:[
+ P('Dibaca sebelum masuk kamar mandi atau WC. Masuklah dengan <b>kaki kiri</b>.'),
+ DOA('اللّٰهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ','Allaahumma innii a’uudzu bika minal khubutsi wal khabaa-its','Ya Allah, aku berlindung kepada-Mu dari setan laki-laki dan setan perempuan.'),
+ TIP('Kata kunci: berlindung dari setan.')],
+ q:[Q('Doa ini dibaca ketika…','akan masuk kamar mandi',['akan makan','akan tidur','selesai salat'],'Doa ini dibaca sebelum masuk kamar mandi.'),
+    Q('Kita masuk kamar mandi dengan kaki…','kiri',['kanan','dua-duanya melompat','terserah'],'Masuk tempat kotor dengan kaki kiri, keluar dengan kaki kanan.'),
+    Q('Isi doa ini: kita berlindung kepada Allah dari…','setan laki-laki dan setan perempuan',['hujan deras','kucing','gelap'],'Khubuts dan khabaa-its adalah setan laki-laki dan perempuan.'),
+    Q('Kata “Allaahumma” artinya…','Ya Allah',['terima kasih','selamat pagi','dengan nama Allah'],'Allaahumma = Ya Allah.')]},
+
+{t:'Keluar Kamar Mandi',s:'Doa setelah keluar',b:[
+ P('Dibaca setelah keluar dari kamar mandi. Keluarlah dengan <b>kaki kanan</b>.'),
+ DOA('غُفْرَانَكَ الْحَمْدُ لِلّٰهِ الَّذِي أَذْهَبَ عَنِّي الْأَذَى وَعَافَانِي','Ghufraanaka. Alhamdulillaahilladzii adzhaba ’annil adzaa wa ’aafaanii','Aku mohon ampunan-Mu. Segala puji bagi Allah yang telah menghilangkan kotoran dari badanku dan menyehatkanku.'),
+ TIP('Kata kunci: minta ampun dan bersyukur.')],
+ q:[Q('Doa ini dibaca ketika…','keluar dari kamar mandi',['masuk kamar mandi','mau makan','mau belajar'],'Dibaca setelah keluar kamar mandi.'),
+    Q('Kita keluar kamar mandi dengan kaki…','kanan',['kiri','melompat','berlari'],'Keluar dengan kaki kanan.'),
+    Q('“Ghufraanaka” artinya…','aku mohon ampunan-Mu',['aku mohon rezeki','aku berlindung','aku berterima kasih saja'],'Ghufraanaka = aku mohon ampunan-Mu.'),
+    Q('Kita bersyukur karena Allah telah menghilangkan…','kotoran dari badan',['hujan','rasa lapar','rasa kantuk'],'Adzhaba ’annil adzaa = menghilangkan kotoran dariku.')]},
+
+{t:'Menjaga Kesucian',s:'Doa saat mulai berwudhu',b:[
+ P('Dibaca saat akan mulai berwudhu, supaya kita menjaga diri tetap suci dan siap beribadah.'),
+ DOA('بِسْمِ اللّٰهِ الْعَظِيمِ وَالْحَمْدُ لِلّٰهِ عَلَى دِينِ الْإِسْلَامِ','Bismillaahil ’azhiim, walhamdulillaahi ’alaa diinil islaam','Dengan nama Allah Yang Maha Agung, segala puji bagi Allah atas agama Islam.'),
+ TIP('Bacaan doa bisa sedikit berbeda di buku gurumu. Ikuti bacaan dari guru ya.')],
+ q:[Q('Doa ini dibaca ketika…','akan mulai berwudhu',['akan makan','akan tidur','akan berangkat sekolah'],'Dibaca saat mulai wudhu.'),
+    Q('“Bismillaah” artinya…','dengan nama Allah',['terima kasih','ya Allah','segala puji bagi Allah'],'Bismillaah = dengan nama Allah.'),
+    Q('“Alhamdulillaah” artinya…','segala puji bagi Allah',['dengan nama Allah','ya Allah','aku mohon ampun'],'Alhamdulillaah = segala puji bagi Allah.'),
+    Q('Kita menjaga kesucian supaya…','siap beribadah dengan bersih',['bisa bermain lebih lama','tidak perlu mandi','cepat besar'],'Suci adalah syarat untuk salat dan ibadah lainnya.')]},
+
+{t:'Membasuh Telapak Tangan',s:'Doa saat membasuh telapak tangan',b:[
+ P('Wudhu dimulai dengan membasuh <b>kedua telapak tangan</b> sampai pergelangan, sebanyak 3 kali.'),
+ DOA('اللّٰهُمَّ إِنِّي أَسْأَلُكَ الْيُمْنَ وَالْبَرَكَةَ وَأَعُوذُ بِكَ مِنَ الشُّؤْمِ وَالْهَلَكَةِ','Allaahumma innii as’aluka al-yumna wal barakata wa a’uudzu bika minasy-syu’mi wal halakah','Ya Allah, aku mohon kepada-Mu kebaikan dan keberkahan, dan aku berlindung kepada-Mu dari kesialan dan kebinasaan.'),
+ TIP('Kata kunci: minta kebaikan dan keberkahan.')],
+ q:[Q('Doa ini dibaca saat membasuh…','telapak tangan',['muka','kaki','rambut'],'Wudhu dimulai dengan telapak tangan.'),
+    Q('Dalam doa ini kita memohon…','kebaikan dan keberkahan',['mainan baru','uang saku','makanan enak'],'Al-yumna wal barakah = kebaikan dan keberkahan.'),
+    Q('Kita berlindung dari…','kesialan dan kebinasaan',['hujan','kelaparan saja','panas'],'Asy-syu’mi wal halakah = kesialan dan kebinasaan.'),
+    Q('Telapak tangan dibasuh sebanyak…','3 kali',['1 kali saja','10 kali','100 kali'],'Disunnahkan membasuh 3 kali.')]},
+
+{t:'Kumur-kumur',s:'Doa saat berkumur',b:[
+ P('Setelah telapak tangan, kita <b>berkumur</b> (membersihkan mulut) sebanyak 3 kali.'),
+ DOA('اللّٰهُمَّ أَعِنِّي عَلَى تِلَاوَةِ الْقُرْآنِ وَذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ','Allaahumma a’innii ’alaa tilaawatil qur’aani wa dzikrika wa syukrika wa husni ’ibaadatik','Ya Allah, bantulah aku membaca Al-Qur’an, berzikir kepada-Mu, bersyukur kepada-Mu, dan beribadah dengan baik.'),
+ TIP('Mulut yang bersih dipakai untuk membaca Al-Qur’an dan berzikir.')],
+ q:[Q('Doa ini dibaca saat…','berkumur',['membasuh kaki','mengusap rambut','membasuh tangan kiri'],'Doa ini dibaca ketika kumur-kumur.'),
+    Q('Kita minta dibantu Allah untuk…','membaca Al-Qur’an dan berzikir',['main game','tidur lebih lama','makan permen'],'Kita minta bantuan untuk tilawah, zikir, syukur, dan ibadah yang baik.'),
+    Q('“Tilaawatil Qur’aan” artinya…','membaca Al-Qur’an',['menulis buku','menyanyi lagu','menonton film'],'Tilaawah = membaca.'),
+    Q('Sesudah telapak tangan, kita…','berkumur',['membasuh kaki','mengusap telinga','membasuh muka'],'Urutan: telapak tangan, lalu kumur.')]},
+
+{t:'Menghisap Air ke Hidung',s:'Doa saat membersihkan hidung',b:[
+ P('Setelah berkumur, kita <b>menghirup air ke dalam hidung</b> lalu mengeluarkannya, sebanyak 3 kali.'),
+ DOA('اللّٰهُمَّ أَرِحْنِي رَائِحَةَ الْجَنَّةِ وَأَنْتَ عَنِّي رَاضٍ','Allaahumma arihnii raa-ihatal jannati wa anta ’annii raadhin','Ya Allah, berilah aku mencium bau surga, dan Engkau ridha kepadaku.'),
+ TIP('Kata kunci: bau surga.')],
+ q:[Q('Doa ini dibaca saat…','menghirup air ke hidung',['berkumur','membasuh kaki','membasuh muka'],'Dibaca ketika membersihkan hidung.'),
+    Q('Dalam doa ini kita minta dapat mencium…','bau surga',['bau bunga','bau makanan','bau hujan'],'Raa-ihatal jannah = bau surga.'),
+    Q('“Al-Jannah” artinya…','surga',['neraka','rumah','taman bermain'],'Al-Jannah = surga.'),
+    Q('Urutan yang benar adalah…','kumur, lalu hidung',['hidung, lalu telapak tangan','kaki, lalu kumur','rambut, lalu hidung'],'Telapak tangan, kumur, hidung.')]},
+
+{t:'Niat Wudhu',s:'Niat saat membasuh muka',b:[
+ P('Niat dibaca di dalam hati saat <b>mulai membasuh muka</b>.'),
+ DOA('نَوَيْتُ الْوُضُوءَ لِرَفْعِ الْحَدَثِ الْأَصْغَرِ فَرْضًا لِلّٰهِ تَعَالَى','Nawaitul wudhuu-a liraf’il hadatsil ashghari fardhan lillaahi ta’aalaa','Aku niat berwudhu untuk menghilangkan hadas kecil, fardhu karena Allah Ta’ala.'),
+ P('<b>Urutan wudhu:</b>'),
+ OL(['Membasuh telapak tangan','Berkumur','Menghirup air ke hidung','<b>Niat</b> sambil membasuh muka','Membasuh tangan kanan, lalu kiri sampai siku','Mengusap rambut (kepala)','Mengusap telinga','Membasuh kedua kaki sampai mata kaki','Membaca doa sesudah wudhu']),
+ TIP('Niat itu di hati. Boleh juga diucapkan pelan.')],
+ q:[Q('Niat wudhu dibaca saat…','mulai membasuh muka',['membasuh kaki','berkumur','selesai wudhu'],'Niat dibaca ketika mulai membasuh muka.'),
+    Q('Niat wudhu dilakukan dengan…','hati (boleh juga diucapkan)',['berteriak keras','menari','menulis di kertas'],'Niat itu tempatnya di hati.'),
+    Q('“Nawaitul wudhuu-a” artinya…','aku niat berwudhu',['aku mau makan','aku mau tidur','aku mau belajar'],'Nawaitu = aku niat.'),
+    Q('Wudhu dilakukan untuk menghilangkan…','hadas kecil',['rasa lapar','rasa kantuk','rasa panas'],'Wudhu menghilangkan hadas kecil.'),
+    Q('Yang dibasuh setelah muka adalah…','tangan kanan',['kaki','telinga','hidung'],'Setelah muka: tangan kanan, lalu tangan kiri.')]},
+
+{t:'Membasuh Muka',s:'Doa saat membasuh muka',b:[
+ P('Membasuh <b>seluruh muka</b> dari tempat tumbuh rambut sampai dagu, dan dari telinga ke telinga.'),
+ DOA('اللّٰهُمَّ بَيِّضْ وَجْهِي يَوْمَ تَبْيَضُّ وُجُوهٌ وَتَسْوَدُّ وُجُوهٌ','Allaahumma bayyidh wajhii yauma tabyadhdhu wujuuhun wa taswaddu wujuuh','Ya Allah, putihkanlah wajahku pada hari ketika ada wajah yang putih berseri dan ada wajah yang hitam muram.'),
+ TIP('Kata kunci: wajah berseri-seri di akhirat.')],
+ q:[Q('Doa ini dibaca saat membasuh…','muka',['kaki','tangan','telinga'],'Doa ini untuk membasuh muka.'),
+    Q('“Wajhii” artinya…','wajahku',['tanganku','kakiku','rambutku'],'Wajh = wajah.'),
+    Q('Kita berharap wajah kita pada hari akhir menjadi…','putih berseri',['hitam muram','biru','merah'],'Bayyidh wajhii = putihkanlah wajahku.'),
+    Q('Wajah dibasuh dari…','tempat tumbuh rambut sampai dagu',['kepala sampai kaki','dada sampai perut','tangan sampai siku'],'Batas muka: dahi/rambut sampai dagu.')]},
+
+{t:'Membasuh Tangan Kanan',s:'Doa saat membasuh tangan kanan',b:[
+ P('Membasuh <b>tangan kanan</b> sampai siku. Mulailah dari yang kanan.'),
+ DOA('اللّٰهُمَّ أَعْطِنِي كِتَابِي بِيَمِينِي وَحَاسِبْنِي حِسَابًا يَسِيرًا','Allaahumma a’thinii kitaabii biyamiinii wa haasibnii hisaaban yasiiraa','Ya Allah, berikanlah catatan amalku di tangan kananku, dan hisablah aku dengan hisab yang mudah.'),
+ TIP('Orang yang menerima catatan amal di tangan kanan adalah orang yang beruntung.')],
+ q:[Q('Doa ini dibaca saat membasuh…','tangan kanan',['tangan kiri','kaki','muka'],'Untuk tangan kanan.'),
+    Q('Kita berharap catatan amal diberikan di tangan…','kanan',['kiri','belakang','atas'],'Biyamiinii = di tangan kananku.'),
+    Q('“Yamiin” artinya…','kanan',['kiri','depan','atas'],'Yamiin = kanan.'),
+    Q('Kita memohon hisab (perhitungan amal) yang…','mudah',['sulit','lama','berat'],'Yasiiraa = mudah.')]},
+
+{t:'Membasuh Tangan Kiri',s:'Doa saat membasuh tangan kiri',b:[
+ P('Membasuh <b>tangan kiri</b> sampai siku.'),
+ DOA('اللّٰهُمَّ لَا تُعْطِنِي كِتَابِي بِشِمَالِي وَلَا مِنْ وَرَاءِ ظَهْرِي','Allaahumma laa tu’thinii kitaabii bisyimaalii wa laa min waraa-i zhahrii','Ya Allah, jangan berikan catatan amalku di tangan kiriku atau dari belakang punggungku.'),
+ TIP('Kata kunci: jangan diberi catatan amal di tangan kiri.')],
+ q:[Q('Doa ini dibaca saat membasuh…','tangan kiri',['tangan kanan','muka','kaki'],'Untuk tangan kiri.'),
+    Q('“Syimaal” artinya…','kiri',['kanan','tengah','atas'],'Syimaal = kiri.'),
+    Q('Kita memohon supaya catatan amal TIDAK diberikan di tangan…','kiri dan dari belakang punggung',['kanan','atas','depan'],'Kita minta jangan di kiri atau di belakang.'),
+    Q('Setelah tangan kanan, kita membasuh…','tangan kiri',['telinga','hidung','kumur'],'Kanan dulu, lalu kiri.')]},
+
+{t:'Mengusap Rambut',s:'Doa saat mengusap kepala',b:[
+ P('Mengusap sebagian <b>rambut di kepala</b> dengan tangan yang basah.'),
+ DOA('اللّٰهُمَّ حَرِّمْ شَعْرِي وَبَشَرِي عَلَى النَّارِ','Allaahumma harrim sya’rii wa basyarii ’alan naar','Ya Allah, haramkanlah rambutku dan kulitku dari api neraka.'),
+ TIP('Kata kunci: dijauhkan dari api neraka.')],
+ q:[Q('Doa ini dibaca saat…','mengusap rambut',['membasuh kaki','berkumur','membasuh muka'],'Doa untuk mengusap rambut.'),
+    Q('“Sya’rii” artinya…','rambutku',['tanganku','kakiku','mukaku'],'Sya’r = rambut.'),
+    Q('Kita memohon rambut dan kulit kita dijauhkan dari…','api neraka',['hujan','dingin','sakit gigi'],'’Alan naar = dari api neraka.'),
+    Q('Rambut diusap dengan…','tangan yang basah',['sisir kering','handuk','kain kering'],'Kita mengusap, bukan membasuh.')]},
+
+{t:'Mengusap Telinga',s:'Doa saat mengusap telinga',b:[
+ P('Mengusap <b>bagian dalam dan luar telinga</b> dengan jari yang basah.'),
+ DOA('اللّٰهُمَّ اجْعَلْنِي مِنَ الَّذِينَ يَسْتَمِعُونَ الْقَوْلَ فَيَتَّبِعُونَ أَحْسَنَهُ','Allaahummaj’alnii minal ladziina yastami’uunal qaula fayattabi’uuna ahsanah','Ya Allah, jadikanlah aku termasuk orang yang mendengarkan perkataan, lalu mengikuti yang terbaik.'),
+ TIP('Telinga dipakai untuk mendengar nasihat yang baik.')],
+ q:[Q('Doa ini dibaca saat mengusap…','telinga',['hidung','rambut','kaki'],'Doa untuk mengusap telinga.'),
+    Q('Dalam doa ini kita ingin menjadi orang yang mengikuti perkataan yang…','terbaik',['paling lucu','paling panjang','paling cepat'],'Ahsanah = yang terbaik.'),
+    Q('Telinga kita gunakan untuk…','mendengar',['melihat','mencium','berbicara'],'Telinga untuk mendengar.'),
+    Q('Setelah mengusap rambut, kita mengusap…','telinga',['hidung','kumur','tangan kanan'],'Rambut lalu telinga.')]},
+
+{t:'Membasuh Kedua Kaki',s:'Doa saat membasuh kaki',b:[
+ P('Membasuh <b>kaki kanan lalu kaki kiri</b> sampai mata kaki.'),
+ DOA('اللّٰهُمَّ ثَبِّتْ قَدَمَيَّ عَلَى الصِّرَاطِ يَوْمَ تَزِلُّ فِيهِ الْأَقْدَامُ','Allaahumma tsabbit qadamayya ’alash shiraathi yauma tazillu fiihil aqdaam','Ya Allah, teguhkanlah kedua kakiku di atas jembatan (shirath) pada hari ketika banyak kaki tergelincir.'),
+ TIP('Kata kunci: kaki diteguhkan di atas shirath.')],
+ q:[Q('Doa ini dibaca saat membasuh…','kedua kaki',['kedua tangan','muka','telinga'],'Doa untuk membasuh kaki.'),
+    Q('“Qadam” artinya…','kaki',['tangan','kepala','mata'],'Qadam = kaki.'),
+    Q('Kita minta kaki diteguhkan di atas…','shirath (jembatan)',['bukit','kasur','jalan raya'],'Ash-shiraath = jembatan di akhirat.'),
+    Q('Kaki dibasuh sampai…','mata kaki',['lutut','paha','pinggang'],'Batasnya sampai mata kaki.')]},
+
+{t:'Sesudah Wudhu',s:'Doa setelah selesai wudhu',b:[
+ P('Dibaca setelah selesai berwudhu.'),
+ DOA('أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللّٰهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ','Asyhadu allaa ilaaha illallaah wahdahu laa syariika lah, wa asyhadu anna Muhammadan ’abduhu wa rasuuluh. Allaahummaj’alnii minat tawwaabiina waj’alnii minal mutathahhiriin','Aku bersaksi tidak ada Tuhan selain Allah Yang Maha Esa, tidak ada sekutu bagi-Nya, dan aku bersaksi bahwa Nabi Muhammad adalah hamba dan utusan-Nya. Ya Allah, jadikanlah aku termasuk orang yang bertobat dan orang yang bersuci.'),
+ TIP('Doa ini berisi dua kalimat syahadat.')],
+ q:[Q('Doa ini dibaca…','sesudah selesai wudhu',['sebelum wudhu','sebelum makan','saat berangkat sekolah'],'Dibaca setelah wudhu.'),
+    Q('Doa ini berisi…','dua kalimat syahadat',['hitungan angka','nama-nama hari','lagu anak'],'Isinya syahadat, lalu doa menjadi orang yang bertobat dan bersuci.'),
+    Q('Kita bersaksi bahwa Nabi Muhammad adalah…','hamba dan utusan Allah',['raja','malaikat','pedagang saja'],'’Abduhu wa rasuuluh = hamba dan utusan-Nya.'),
+    Q('“Al-mutathahhiriin” artinya…','orang-orang yang bersuci',['orang-orang yang tidur','orang-orang yang berlari','orang-orang yang makan'],'Mutathahhir = orang yang bersuci.')]},
+
+{t:'Sebelum Salat',s:'Doa iftitah',b:[
+ P('Dibaca setelah takbiratul ihram (“Allahu Akbar” pertama) dan sebelum membaca Al-Fatihah. Doa ini disebut <b>doa iftitah</b>, artinya doa pembuka salat.'),
+ DOA('اللّٰهُ أَكْبَرُ كَبِيرًا وَالْحَمْدُ لِلّٰهِ كَثِيرًا وَسُبْحَانَ اللّٰهِ بُكْرَةً وَأَصِيلًا. إِنِّي وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالْأَرْضَ حَنِيفًا مُسْلِمًا وَمَا أَنَا مِنَ الْمُشْرِكِينَ. إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلّٰهِ رَبِّ الْعَالَمِينَ. لَا شَرِيكَ لَهُ وَبِذٰلِكَ أُمِرْتُ وَأَنَا مِنَ الْمُسْلِمِينَ','Allaahu akbar kabiiraa, walhamdulillaahi katsiiraa, wa subhaanallaahi bukratan wa ashiilaa. Innii wajjahtu wajhiya lilladzii fatharas samaawaati wal ardha haniifan musliman wa maa ana minal musyrikiin. Inna shalaatii wa nusukii wa mahyaaya wa mamaatii lillaahi rabbil ’aalamiin. Laa syariika lahu wa bidzaalika umirtu wa ana minal muslimiin','Allah Maha Besar dengan sebesar-besarnya, segala puji bagi Allah sebanyak-banyaknya, dan Maha Suci Allah pagi dan petang. Aku menghadapkan wajahku kepada Allah yang menciptakan langit dan bumi, dengan lurus dan berserah diri, dan aku bukan termasuk orang musyrik. Sesungguhnya salatku, ibadahku, hidupku, dan matiku hanya untuk Allah, Tuhan semesta alam. Tidak ada sekutu bagi-Nya. Itulah yang diperintahkan kepadaku, dan aku termasuk orang-orang muslim.'),
+ TIP('Bacaan pembuka salat bisa berbeda-beda. Ikuti yang diajarkan gurumu.')],
+ q:[Q('Doa iftitah dibaca…','setelah takbiratul ihram, sebelum Al-Fatihah',['setelah salam','sebelum wudhu','saat sujud'],'Iftitah dibaca di awal salat.'),
+    Q('“Iftitah” artinya…','pembuka',['penutup','pengingat','penyejuk'],'Iftitah = pembuka.'),
+    Q('Dalam doa ini kita menyatakan salat, hidup, dan mati kita hanya untuk…','Allah',['guru','teman','orang tua saja'],'Lillaahi rabbil ’aalamiin.'),
+    Q('“Allahu Akbar” artinya…','Allah Maha Besar',['Allah Maha Pengampun','Allah Maha Tahu','Allah Maha Penyayang'],'Akbar = paling besar.')]}
+];
+/* ===== JUZ'AMMA ===== */
+/* Soal "ayat berikutnya": dibuat otomatis dari daftar ayat supaya pilihan jawabannya pasti sesuai teks di atas. */
+const NX=(AY,i,n)=>{
+  const others=AY.map((a,k)=>k).filter(k=>k!==i+1&&k!==i);
+  const pick=[others[(i*3+1)%others.length],others[(i*3+4)%others.length],others[(i*5+7)%others.length]];
+  const uniq=[...new Set(pick)];
+  for(const k of others){ if(uniq.length>=3)break; if(!uniq.includes(k))uniq.push(k); }
+  return Q('Ayat '+n+' berbunyi “'+AY[i][0]+'”. Ayat berikutnya adalah…',AY[i+1][0],uniq.slice(0,3).map(k=>AY[k][0]),'Ayat berikutnya: '+AY[i+1][1]+' (artinya: '+AY[i+1][2]+')');
+};
+
+const FAJR=[
+['وَالْفَجْرِ','Wal-fajr','Demi fajar'],
+['وَلَيَالٍ عَشْرٍ','Wa layaalin ’asyr','Demi malam yang sepuluh'],
+['وَالشَّفْعِ وَالْوَتْرِ','Wasy-syaf’i wal-watr','Demi yang genap dan yang ganjil'],
+['وَاللَّيْلِ إِذَا يَسْرِ','Wal-laili idzaa yasr','Demi malam apabila berlalu'],
+['هَلْ فِي ذَٰلِكَ قَسَمٌ لِّذِي حِجْرٍ','Hal fii dzaalika qasamul lidzii hijr','Adakah dalam sumpah itu terdapat sumpah bagi orang yang berakal?'],
+['أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِعَادٍ','Alam tara kaifa fa’ala rabbuka bi’aad','Tidakkah engkau memperhatikan bagaimana Tuhanmu berbuat terhadap kaum ’Ad?'],
+['إِرَمَ ذَاتِ الْعِمَادِ','Irama dzaatil-’imaad','(Yaitu) penduduk Iram yang memiliki bangunan-bangunan tinggi'],
+['الَّتِي لَمْ يُخْلَقْ مِثْلُهَا فِي الْبِلَادِ','Allatii lam yukhlaq mitsluhaa fil-bilaad','Yang belum pernah dibangun seperti itu di negeri-negeri lain'],
+['وَثَمُودَ الَّذِينَ جَابُوا الصَّخْرَ بِالْوَادِ','Wa tsamuudal-ladziina jaabush-shakhra bil-waad','Dan kaum Tsamud yang memotong batu-batu besar di lembah'],
+['وَفِرْعَوْنَ ذِي الْأَوْتَادِ','Wa fir’auna dzil-autaad','Dan Fir’aun yang mempunyai pasak-pasak (bangunan yang besar)'],
+['الَّذِينَ طَغَوْا فِي الْبِلَادِ','Alladziina thaghau fil-bilaad','Yang berbuat melampaui batas di negeri-negeri'],
+['فَأَكْثَرُوا فِيهَا الْفَسَادَ','Fa aktsaruu fiihal-fasaad','Lalu mereka banyak berbuat kerusakan di dalamnya'],
+['فَصَبَّ عَلَيْهِمْ رَبُّكَ سَوْطَ عَذَابٍ','Fa shabba ’alaihim rabbuka sauta ’adzaab','Maka Tuhanmu menimpakan cemeti azab kepada mereka'],
+['إِنَّ رَبَّكَ لَبِالْمِرْصَادِ','Inna rabbaka labil-mirshaad','Sungguh, Tuhanmu benar-benar mengawasi'],
+['فَأَمَّا الْإِنسَانُ إِذَا مَا ابْتَلَاهُ رَبُّهُ فَأَكْرَمَهُ وَنَعَّمَهُ فَيَقُولُ رَبِّي أَكْرَمَنِ','Fa ammal-insaanu idzaa mabtalaahu rabbuhu fa akramahu wa na’’amahu fa yaquulu rabbii akraman','Adapun manusia, apabila Tuhan mengujinya lalu memuliakannya dan memberinya kesenangan, ia berkata, “Tuhanku telah memuliakanku.”'],
+['وَأَمَّا إِذَا مَا ابْتَلَاهُ فَقَدَرَ عَلَيْهِ رِزْقَهُ فَيَقُولُ رَبِّي أَهَانَنِ','Wa ammaa idzaa mabtalaahu fa qadara ’alaihi rizqahu fa yaquulu rabbii ahaanan','Namun apabila Tuhan mengujinya lalu membatasi rezekinya, ia berkata, “Tuhanku telah menghinakanku.”'],
+['كَلَّا بَل لَّا تُكْرِمُونَ الْيَتِيمَ','Kallaa bal laa tukrimuunal-yatiim','Sekali-kali tidak! Bahkan kamu tidak memuliakan anak yatim'],
+['وَلَا تَحَاضُّونَ عَلَىٰ طَعَامِ الْمِسْكِينِ','Wa laa tahaadhdhuuna ’alaa tha’aamil-miskiin','Dan kamu tidak saling mengajak memberi makan orang miskin'],
+['وَتَأْكُلُونَ التُّرَاثَ أَكْلًا لَّمًّا','Wa ta’kuluunat-turaatsa aklal lammaa','Dan kamu memakan harta warisan dengan cara mencampurbaurkan (halal dan haram)'],
+['وَتُحِبُّونَ الْمَالَ حُبًّا جَمًّا','Wa tuhibbuunal-maala hubban jammaa','Dan kamu mencintai harta dengan kecintaan yang berlebihan'],
+['كَلَّا إِذَا دُكَّتِ الْأَرْضُ دَكًّا دَكًّا','Kallaa idzaa dukkatil-ardhu dakkan dakkaa','Sekali-kali tidak! Apabila bumi diguncangkan berturut-turut'],
+['وَجَاءَ رَبُّكَ وَالْمَلَكُ صَفًّا صَفًّا','Wa jaa-a rabbuka wal-malaku shaffan shaffaa','Dan datanglah Tuhanmu, dan malaikat berbaris-baris'],
+['وَجِيءَ يَوْمَئِذٍ بِجَهَنَّمَ ۚ يَوْمَئِذٍ يَتَذَكَّرُ الْإِنسَانُ وَأَنَّىٰ لَهُ الذِّكْرَىٰ','Wa jii-a yauma-idzim bijahannam, yauma-idziy yatadzakkarul-insaanu wa annaa lahudz-dzikraa','Pada hari itu diperlihatkan neraka Jahanam. Pada hari itu manusia ingat, tetapi tidak berguna lagi baginya'],
+['يَقُولُ يَا لَيْتَنِي قَدَّمْتُ لِحَيَاتِي','Yaquulu yaa laitanii qaddamtu lihayaatii','Dia berkata, “Alangkah baiknya sekiranya dahulu aku mengerjakan kebajikan untuk hidupku ini.”'],
+['فَيَوْمَئِذٍ لَّا يُعَذِّبُ عَذَابَهُ أَحَدٌ','Fa yauma-idzil laa yu’adzdzibu ’adzaabahu ahad','Maka pada hari itu tidak ada seorang pun yang mengazab seperti azab-Nya'],
+['وَلَا يُوثِقُ وَثَاقَهُ أَحَدٌ','Wa laa yuutsiqu watsaaqahu ahad','Dan tidak ada seorang pun yang mengikat seperti ikatan-Nya'],
+['يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ','Yaa ayyatuhan-nafsul-muthma-innah','Wahai jiwa yang tenang!'],
+['ارْجِعِي إِلَىٰ رَبِّكِ رَاضِيَةً مَّرْضِيَّةً','Irji’ii ilaa rabbiki raadhiyatam mardhiyyah','Kembalilah kepada Tuhanmu dengan hati yang puas dan diridai-Nya'],
+['فَادْخُلِي فِي عِبَادِي','Fadkhulii fii ’ibaadii','Maka masuklah ke dalam golongan hamba-hamba-Ku'],
+['وَادْخُلِي جَنَّتِي','Wadkhulii jannatii','Dan masuklah ke dalam surga-Ku']];
+
+const BALAD=[
+['لَا أُقْسِمُ بِهَٰذَا الْبَلَدِ','Laa uqsimu bihaadzal-balad','Aku bersumpah dengan negeri ini (Mekah)'],
+['وَأَنتَ حِلٌّ بِهَٰذَا الْبَلَدِ','Wa anta hillun bihaadzal-balad','Dan engkau (Muhammad) bertempat tinggal di negeri ini'],
+['وَوَالِدٍ وَمَا وَلَدَ','Wa waalidin wa maa walad','Demi bapak dan anaknya'],
+['لَقَدْ خَلَقْنَا الْإِنسَانَ فِي كَبَدٍ','Laqad khalaqnal-insaana fii kabad','Sungguh, Kami telah menciptakan manusia berada dalam susah payah'],
+['أَيَحْسَبُ أَن لَّن يَقْدِرَ عَلَيْهِ أَحَدٌ','A yahsabu al-lay yaqdira ’alaihi ahad','Apakah dia mengira bahwa tidak ada seorang pun yang berkuasa atasnya?'],
+['يَقُولُ أَهْلَكْتُ مَالًا لُّبَدًا','Yaquulu ahlaktu maalal-lubadaa','Dia mengatakan, “Aku telah menghabiskan harta yang banyak.”'],
+['أَيَحْسَبُ أَن لَّمْ يَرَهُ أَحَدٌ','A yahsabu al-lam yarahu ahad','Apakah dia mengira bahwa tidak ada orang yang melihatnya?'],
+['أَلَمْ نَجْعَل لَّهُ عَيْنَيْنِ','Alam naj’al lahu ’ainain','Bukankah Kami telah memberikan kepadanya dua mata,'],
+['وَلِسَانًا وَشَفَتَيْنِ','Wa lisaanaw wa syafatain','dan lidah dan sepasang bibir?'],
+['وَهَدَيْنَاهُ النَّجْدَيْنِ','Wa hadainaahun-najdain','Dan Kami telah menunjukkan kepadanya dua jalan (kebaikan dan keburukan)'],
+['فَلَا اقْتَحَمَ الْعَقَبَةَ','Falaqtahamal-’aqabah','Tetapi dia tidak menempuh jalan yang mendaki dan sukar'],
+['وَمَا أَدْرَاكَ مَا الْعَقَبَةُ','Wa maa adraaka mal-’aqabah','Dan tahukah kamu apakah jalan yang mendaki dan sukar itu?'],
+['فَكُّ رَقَبَةٍ','Fakku raqabah','(Yaitu) melepaskan perbudakan (hamba sahaya)'],
+['أَوْ إِطْعَامٌ فِي يَوْمٍ ذِي مَسْغَبَةٍ','Au ith’aamun fii yaumin dzii masghabah','Atau memberi makan pada hari terjadi kelaparan'],
+['يَتِيمًا ذَا مَقْرَبَةٍ','Yatiiman dzaa maqrabah','(Kepada) anak yatim yang ada hubungan kerabat'],
+['أَوْ مِسْكِينًا ذَا مَتْرَبَةٍ','Au miskiinan dzaa matrabah','Atau orang miskin yang sangat fakir'],
+['ثُمَّ كَانَ مِنَ الَّذِينَ آمَنُوا وَتَوَاصَوْا بِالصَّبْرِ وَتَوَاصَوْا بِالْمَرْحَمَةِ','Tsumma kaana minalladziina aamanuu wa tawaashau bish-shabri wa tawaashau bil-marhamah','Kemudian dia termasuk orang-orang yang beriman dan saling berpesan untuk bersabar dan saling berpesan untuk berkasih sayang'],
+['أُولَٰئِكَ أَصْحَابُ الْمَيْمَنَةِ','Ulaa-ika ash-haabul-maimanah','Mereka adalah golongan kanan'],
+['وَالَّذِينَ كَفَرُوا بِآيَاتِنَا هُمْ أَصْحَابُ الْمَشْأَمَةِ','Walladziina kafaruu bi-aayaatinaa hum ash-haabul-masy-amah','Dan orang-orang yang kafir kepada ayat-ayat Kami, mereka adalah golongan kiri'],
+['عَلَيْهِمْ نَارٌ مُّؤْصَدَةٌ','’Alaihim naarum mu-shadah','Mereka berada dalam neraka yang ditutup rapat']];
+
+const SYAMS=[
+['وَالشَّمْسِ وَضُحَاهَا','Wasy-syamsi wa dhuhaahaa','Demi matahari dan sinarnya pada pagi hari'],
+['وَالْقَمَرِ إِذَا تَلَاهَا','Wal-qamari idzaa talaahaa','Demi bulan apabila mengiringinya'],
+['وَالنَّهَارِ إِذَا جَلَّاهَا','Wan-nahaari idzaa jallaahaa','Demi siang apabila menampakkannya'],
+['وَاللَّيْلِ إِذَا يَغْشَاهَا','Wal-laili idzaa yaghsyaahaa','Demi malam apabila menutupinya (gelap gulita)'],
+['وَالسَّمَاءِ وَمَا بَنَاهَا','Was-samaa-i wa maa banaahaa','Demi langit dan pembinaannya'],
+['وَالْأَرْضِ وَمَا طَحَاهَا','Wal-ardhi wa maa thahaahaa','Demi bumi dan penghamparannya'],
+['وَنَفْسٍ وَمَا سَوَّاهَا','Wa nafsin wa maa sawwaahaa','Demi jiwa serta penyempurnaan (ciptaannya)'],
+['فَأَلْهَمَهَا فُجُورَهَا وَتَقْوَاهَا','Fa alhamahaa fujuurahaa wa taqwaahaa','Maka Dia mengilhamkan kepadanya (jalan) kejahatan dan ketakwaannya'],
+['قَدْ أَفْلَحَ مَن زَكَّاهَا','Qad aflaha man zakkaahaa','Sungguh beruntung orang yang menyucikannya (jiwa itu)'],
+['وَقَدْ خَابَ مَن دَسَّاهَا','Wa qad khaaba man dassaahaa','Dan sungguh rugi orang yang mengotorinya'],
+['كَذَّبَتْ ثَمُودُ بِطَغْوَاهَا','Kadzdzabat tsamuudu bi-thaghwaahaa','Kaum Tsamud telah mendustakan (rasulnya) karena mereka melampaui batas'],
+['إِذِ انبَعَثَ أَشْقَاهَا','Idzin-ba’atsa asyqaahaa','Ketika orang yang paling celaka di antara mereka bangkit'],
+['فَقَالَ لَهُمْ رَسُولُ اللَّهِ نَاقَةَ اللَّهِ وَسُقْيَاهَا','Fa qaala lahum rasuulullaahi naaqatallaahi wa suqyaahaa','Lalu Rasul Allah (Nabi Shalih) berkata kepada mereka, “(Biarkanlah) unta betina milik Allah dan minumannya.”'],
+['فَكَذَّبُوهُ فَعَقَرُوهَا فَدَمْدَمَ عَلَيْهِمْ رَبُّهُم بِذَنبِهِمْ فَسَوَّاهَا','Fa kadzdzabuuhu fa ’aqaruuhaa fa damdama ’alaihim rabbuhum bidzanbihim fa sawwaahaa','Lalu mereka mendustakannya dan menyembelih unta itu, maka Tuhan membinasakan mereka karena dosanya, lalu meratakan azab itu'],
+['وَلَا يَخَافُ عُقْبَاهَا','Wa laa yakhaafu ’uqbaahaa','Dan Dia tidak takut terhadap akibatnya']];
+
+const LAIL=[
+['وَاللَّيْلِ إِذَا يَغْشَىٰ','Wal-laili idzaa yaghsyaa','Demi malam apabila menutupi (cahaya siang)'],
+['وَالنَّهَارِ إِذَا تَجَلَّىٰ','Wan-nahaari idzaa tajallaa','Demi siang apabila terang benderang'],
+['وَمَا خَلَقَ الذَّكَرَ وَالْأُنثَىٰ','Wa maa khalaqadz-dzakara wal untsaa','Demi penciptaan laki-laki dan perempuan'],
+['إِنَّ سَعْيَكُمْ لَشَتَّىٰ','Inna sa’yakum lasyattaa','Sungguh, usahamu memang beraneka macam'],
+['فَأَمَّا مَنْ أَعْطَىٰ وَاتَّقَىٰ','Fa amma man a’thaa wattaqaa','Maka adapun orang yang memberikan (hartanya di jalan Allah) dan bertakwa'],
+['وَصَدَّقَ بِالْحُسْنَىٰ','Wa shaddaqa bil-husnaa','Dan membenarkan adanya pahala yang terbaik (surga)'],
+['فَسَنُيَسِّرُهُ لِلْيُسْرَىٰ','Fasanuyassiruhu lil-yusraa','Maka Kami akan mudahkan baginya jalan menuju kemudahan'],
+['وَأَمَّا مَن بَخِلَ وَاسْتَغْنَىٰ','Wa amma man bakhila wastaghnaa','Dan adapun orang yang kikir dan merasa dirinya cukup'],
+['وَكَذَّبَ بِالْحُسْنَىٰ','Wa kadzdzaba bil-husnaa','Serta mendustakan pahala yang terbaik'],
+['فَسَنُيَسِّرُهُ لِلْعُسْرَىٰ','Fasanuyassiruhu lil-’usraa','Maka Kami akan mudahkan baginya jalan menuju kesukaran'],
+['وَمَا يُغْنِي عَنْهُ مَالُهُ إِذَا تَرَدَّىٰ','Wa maa yughnii ’anhu maaluhu idzaa taraddaa','Dan hartanya tidak akan bermanfaat baginya apabila ia telah binasa'],
+['إِنَّ عَلَيْنَا لَلْهُدَىٰ','Inna ’alainaa lal-hudaa','Sungguh, Kamilah yang memberi petunjuk'],
+['وَإِنَّ لَنَا لَلْآخِرَةَ وَالْأُولَىٰ','Wa inna lanaa lal-aakhirata wal-uulaa','Dan sungguh, milik Kamilah akhirat dan dunia'],
+['فَأَنذَرْتُكُمْ نَارًا تَلَظَّىٰ','Fa andzartukum naaran talazhzhaa','Maka Aku memperingatkan kamu dengan api neraka yang menyala-nyala'],
+['لَا يَصْلَاهَا إِلَّا الْأَشْقَى','Laa yashlaahaa illal-asyqaa','Yang hanya dimasuki oleh orang yang paling celaka'],
+['الَّذِي كَذَّبَ وَتَوَلَّىٰ','Alladzii kadzdzaba wa tawallaa','Yang mendustakan (kebenaran) dan berpaling (dari iman)'],
+['وَسَيُجَنَّبُهَا الْأَتْقَى','Wa sayujannabuhal-atqaa','Dan akan dijauhkan darinya orang yang paling bertakwa'],
+['الَّذِي يُؤْتِي مَالَهُ يَتَزَكَّىٰ','Alladzii yu’tii maalahu yatazakkaa','Yang menginfakkan hartanya untuk membersihkan (dirinya)'],
+['وَمَا لِأَحَدٍ عِندَهُ مِن نِّعْمَةٍ تُجْزَىٰ','Wa maa li-ahadin ’indahu min ni’matin tujzaa','Dan tidak ada seorang pun memberikan suatu nikmat padanya yang harus dibalasnya'],
+['إِلَّا ابْتِغَاءَ وَجْهِ رَبِّهِ الْأَعْلَىٰ','Illabtighaa-a wajhi rabbihil-a’laa','Tetapi (dia memberi) semata-mata karena mencari keridaan Tuhannya Yang Mahatinggi'],
+['وَلَسَوْفَ يَرْضَىٰ','Wa lasawfa yardhaa','Dan sungguh, kelak dia akan mendapat kepuasan']];
+
+const DUHA=[
+['وَالضُّحَىٰ','Wadh-dhuhaa','Demi waktu dhuha'],
+['وَاللَّيْلِ إِذَا سَجَىٰ','Wal-laili idzaa sajaa','Demi malam apabila telah sunyi'],
+['مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ','Maa wadda’aka rabbuka wa maa qalaa','Tuhanmu tidak meninggalkanmu dan tidak (pula) membencimu'],
+['وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَىٰ','Wa lal-aakhiratu khairul laka minal uulaa','Dan sungguh, akhirat itu lebih baik bagimu daripada yang permulaan (dunia)'],
+['وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ','Wa lasawfa yu’thiika rabbuka fatardhaa','Dan sungguh, kelak Tuhanmu pasti memberikan karunia-Nya kepadamu sehingga engkau menjadi puas'],
+['أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ','Alam yajidka yatiimaan fa aawaa','Bukankah Dia mendapatimu sebagai anak yatim, lalu Dia melindungimu?'],
+['وَوَجَدَكَ ضَالًّا فَهَدَىٰ','Wa wajadaka dhaallan fahadaa','Dan Dia mendapatimu sebagai orang yang bingung, lalu Dia memberimu petunjuk'],
+['وَوَجَدَكَ عَائِلًا فَأَغْنَىٰ','Wa wajadaka ’aa-ilan fa aghnaa','Dan Dia mendapatimu sebagai orang yang kekurangan, lalu Dia memberimu kecukupan'],
+['فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ','Fa ammal yatiima falaa taqhar','Maka terhadap anak yatim, janganlah engkau berlaku sewenang-wenang'],
+['وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ','Wa ammas saa-ila falaa tanhar','Dan terhadap orang yang meminta-minta, janganlah engkau menghardik(nya)'],
+['وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ','Wa amma bini’mati rabbika fahaddits','Dan terhadap nikmat Tuhanmu, hendaklah engkau menyebut-nyebutnya (dengan bersyukur)']];
+
+const SURAT=(AY,intro,tip)=>[P(intro),AYAT(AY),TIP(tip)];
+
+const JUZ=[
+{t:'Al-Fajr',s:'Surah ke-89 · 30 ayat',b:SURAT(FAJR,'Surah <b>Al-Fajr</b> artinya <b>Fajar</b>. Surah ke-89 dalam Al-Qur’an, terdiri dari <b>30 ayat</b>, diturunkan di Mekah. Surah ini mengajak kita memuliakan anak yatim dan peduli pada orang miskin.','Ayat terakhirnya mengajak kita menjadi jiwa yang tenang dan masuk surga Allah.'),
+ q:[Q('Arti nama surah Al-Fajr adalah…','Fajar',['Matahari','Malam','Negeri'],'Al-Fajr = fajar, waktu menjelang pagi.'),
+    Q('Surah Al-Fajr terdiri dari berapa ayat?','30 ayat',['11 ayat','15 ayat','20 ayat'],'Al-Fajr terdiri dari 30 ayat.'),
+    Q('Surah setelah Al-Fajr adalah…','Al-Balad',['Ad-Duha','Al-Lail','An-Naba’'],'Urutannya: Al-Fajr, Al-Balad, Asy-Syams, Al-Lail, Ad-Duha.'),
+    Q('Dalam surah Al-Fajr, kita diajak untuk memuliakan…','anak yatim',['mainan','makanan','hewan'],'Ayat 17: “Bahkan kamu tidak memuliakan anak yatim.”'),
+    NX(FAJR,0,1),NX(FAJR,28,29)]},
+{t:'Al-Balad',s:'Surah ke-90 · 20 ayat',b:SURAT(BALAD,'Surah <b>Al-Balad</b> artinya <b>Negeri</b>. Surah ke-90, terdiri dari <b>20 ayat</b>. Allah memberi kita dua mata, lidah, dan bibir, lalu mengajak kita berbuat baik: memberi makan anak yatim dan orang miskin, serta saling berpesan sabar dan kasih sayang.','Gunakan mata, lidah, dan bibir untuk hal baik.'),
+ q:[Q('Arti nama surah Al-Balad adalah…','Negeri',['Fajar','Malam','Matahari'],'Al-Balad = negeri.'),
+    Q('Surah Al-Balad terdiri dari berapa ayat?','20 ayat',['30 ayat','15 ayat','11 ayat'],'Al-Balad terdiri dari 20 ayat.'),
+    Q('Surah sebelum Al-Balad adalah…','Al-Fajr',['Ad-Duha','Al-Lail','Asy-Syams'],'Sebelum Al-Balad adalah Al-Fajr.'),
+    Q('Allah memberi manusia dua mata, lidah, dan…','sepasang bibir',['sepasang sayap','sepasang roda','sepasang sepatu'],'Ayat 8 dan 9: dua mata, lidah, dan sepasang bibir.'),
+    NX(BALAD,0,1),NX(BALAD,7,8)]},
+{t:'Asy-Syams',s:'Surah ke-91 · 15 ayat',b:SURAT(SYAMS,'Surah <b>Asy-Syams</b> artinya <b>Matahari</b>. Surah ke-91, terdiri dari <b>15 ayat</b>. Allah bersumpah demi matahari, bulan, siang, dan malam. Orang yang menyucikan jiwanya akan beruntung. Surah ini juga bercerita tentang kaum Tsamud yang mendustakan Nabi Shalih.','Menjaga hati tetap bersih membuat kita beruntung.'),
+ q:[Q('Arti nama surah Asy-Syams adalah…','Matahari',['Bulan','Malam','Fajar'],'Asy-Syams = matahari.'),
+    Q('Surah Asy-Syams terdiri dari berapa ayat?','15 ayat',['11 ayat','20 ayat','30 ayat'],'Asy-Syams terdiri dari 15 ayat.'),
+    Q('Orang yang menyucikan jiwanya akan…','beruntung',['rugi','sedih','kesepian'],'Ayat 9: “Sungguh beruntung orang yang menyucikannya.”'),
+    Q('Kaum yang mendustakan rasulnya dalam surah ini adalah kaum…','Tsamud',['Quraisy','Madyan','Saba’'],'Kaum Tsamud mendustakan Nabi Shalih.'),
+    NX(SYAMS,0,1),NX(SYAMS,8,9)]},
+{t:'Al-Lail',s:'Surah ke-92 · 21 ayat',b:SURAT(LAIL,'Surah <b>Al-Lail</b> artinya <b>Malam</b>. Surah ke-92, terdiri dari <b>21 ayat</b>. Orang yang suka memberi dan bertakwa akan dimudahkan jalan kebaikannya. Orang yang kikir akan dimudahkan jalan kesulitannya.','Suka berbagi itu baik. Allah memudahkan jalan orang yang dermawan.'),
+ q:[Q('Arti nama surah Al-Lail adalah…','Malam',['Siang','Matahari','Negeri'],'Al-Lail = malam.'),
+    Q('Surah Al-Lail terdiri dari berapa ayat?','21 ayat',['11 ayat','15 ayat','30 ayat'],'Al-Lail terdiri dari 21 ayat.'),
+    Q('Orang yang suka memberi dan bertakwa akan dimudahkan jalan…','kebaikan',['kesulitan','kemalasan','kesedihan'],'Ayat 5–7: orang yang memberi dan bertakwa dimudahkan menuju kemudahan.'),
+    Q('Surah sebelum Al-Lail adalah…','Asy-Syams',['Al-Fajr','Ad-Duha','Al-Balad'],'Sebelum Al-Lail adalah Asy-Syams.'),
+    NX(LAIL,0,1),NX(LAIL,19,20)]},
+{t:'Ad-Duha',s:'Surah ke-93 · 11 ayat',b:SURAT(DUHA,'Surah <b>Ad-Duha</b> artinya <b>Waktu Dhuha</b> (pagi yang terang). Surah ke-93, terdiri dari <b>11 ayat</b>. Allah menghibur Nabi Muhammad bahwa Allah tidak pernah meninggalkannya. Kita diajak menyayangi anak yatim, tidak membentak peminta-minta, dan mensyukuri nikmat Allah.','Allah selalu menyayangi kita. Jangan lupa bersyukur.'),
+ q:[Q('Arti nama surah Ad-Duha adalah…','Waktu Dhuha (pagi terang)',['Malam','Fajar','Negeri'],'Ad-Duha = waktu dhuha.'),
+    Q('Surah Ad-Duha terdiri dari berapa ayat?','11 ayat',['15 ayat','20 ayat','30 ayat'],'Ad-Duha terdiri dari 11 ayat.'),
+    Q('Terhadap anak yatim, kita tidak boleh…','berlaku sewenang-wenang',['menyayangi','menolong','menyapa'],'Ayat 9: janganlah engkau berlaku sewenang-wenang terhadap anak yatim.'),
+    Q('Ayat terakhir Ad-Duha mengajak kita untuk…','menyebut nikmat Allah dengan bersyukur',['menyimpan semua makanan','bermain terus','tidur siang'],'Ayat 11: sebutlah nikmat Tuhanmu dengan bersyukur.'),
+    NX(DUHA,0,1),NX(DUHA,8,9)]}
+];
+/* ===== Daftar pelajaran ===== */
+const SUBJECTS=[
+ {id:'fiqih',name:'Fiqih',cls:'s-fiqih',ar:'الْفِقْه',desc:'Aturan ibadah',topics:FIQIH},
+ {id:'aqidah',name:'Aqidah',cls:'s-aqidah',ar:'الْعَقِيدَة',desc:'Keyakinan kepada Allah',topics:AQIDAH},
+ {id:'doa',name:'Do’a-do’a',cls:'s-doa',ar:'الدُّعَاء',desc:'Doa kamar mandi dan wudhu',topics:DOAS},
+ {id:'juz',name:'Juz’amma',cls:'s-juz',ar:'جُزْء عَمَّ',desc:'Surah-surah pendek',topics:JUZ}
+];
+SUBJECTS.forEach(s=>s.topics.forEach((t,i)=>{t.id=s.id+'-'+(i+1);t.subj=s;t.n=i+1;}));
+const ALLT=SUBJECTS.flatMap(s=>s.topics);
+const MAXSTARS=ALLT.length*3;
+
+/* ===== Penyimpanan bintang (aman kalau browser menolak) ===== */
+const KEY='belajar-agama-yuk-v1';
+let prog={};
+try{prog=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){prog={};}
+const getStars=id=>prog[id]||0;
+function saveStars(id,n){
+  if(n>getStars(id)){prog[id]=n;}
+  try{localStorage.setItem(KEY,JSON.stringify(prog));}catch(e){}
+}
+const totalStars=()=>ALLT.reduce((a,t)=>a+getStars(t.id),0);
+
+/* ===== Gambar kecil (SVG) ===== */
+const STAR_PTS='50,6 61,36 94,38 68,58 77,90 50,72 23,90 32,58 6,38 39,36';
+const star=(on,cls)=>`<svg viewBox="0 0 100 100" class="${cls||''}" aria-hidden="true"><polygon points="${STAR_PTS}" fill="${on?'var(--star)':'var(--star-off)'}" stroke="${on?'#E59A00':'var(--edge)'}" stroke-width="5" stroke-linejoin="round"/></svg>`;
+const starsRow=n=>`<span class="stars" role="img" aria-label="${n} dari 3 bintang">${[1,2,3].map(i=>star(i<=n)).join('')}</span>`;
+const mascot=(size,mood)=>`<svg class="mascot" width="${size}" height="${size}" viewBox="0 0 100 100" aria-hidden="true"><polygon points="${STAR_PTS}" fill="#FFC93C" stroke="#E59A00" stroke-width="4" stroke-linejoin="round"/><circle cx="41" cy="50" r="4.5" fill="#3a2a00"/><circle cx="59" cy="50" r="4.5" fill="#3a2a00"/>${mood==='sad'?'<path d="M42 66 Q50 58 58 66" fill="none" stroke="#3a2a00" stroke-width="3.5" stroke-linecap="round"/>':'<path d="M41 59 Q50 69 59 59" fill="none" stroke="#3a2a00" stroke-width="3.5" stroke-linecap="round"/>'}<circle cx="34" cy="60" r="4" fill="#FF9A8B" opacity=".7"/><circle cx="66" cy="60" r="4" fill="#FF9A8B" opacity=".7"/></svg>`;
+const bulb=`<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="17" r="11" fill="#FFC93C" stroke="#E59A00" stroke-width="2.5"/><rect x="14" y="28" width="12" height="7" rx="2.5" fill="#E59A00"/><path d="M16 17l3 4 5-7" fill="none" stroke="#3a2a00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const iconOk=`<svg class="mk" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="var(--good)"/><path d="M8 14.5l4 4 8-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const iconNo=`<svg class="mk" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="var(--bad)"/><path d="M9 9l10 10M19 9L9 19" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>`;
+const arrow=`<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="flex:none"><path d="M9 5l7 7-7 7" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+/* teks Arab di dalam kalimat dibuat lebih besar */
+const AR_RE=/[؀-ۿ]/;
+const T=s=>AR_RE.test(s)?`<span class="ar-i" lang="ar" dir="rtl">${s}</span>`:s;
+
+/* ===== Menampilkan blok materi ===== */
+function block(b){
+  switch(b.k){
+    case 'p':return `<p>${b.t}</p>`;
+    case 'ul':return `<ul>${b.a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    case 'ol':return `<ol>${b.a.map(x=>`<li>${x}</li>`).join('')}</ol>`;
+    case 'tip':return `<div class="tip">${bulb}<span>${b.t}</span></div>`;
+    case 'cards':return `<div class="grid2">${b.a.map(c=>`<div class="mini"><span class="n">${c[0]}</span><span class="tx"><b>${c[1]}</b>${c[2]?`<span>${c[2]}</span>`:''}</span>${c[3]?`<span class="ar" lang="ar" dir="rtl">${c[3]}</span>`:''}</div>`).join('')}</div>`;
+    case 'doa':return `<div class="doa"><div class="ar" lang="ar" dir="rtl">${b.ar}</div><div><div class="lbl">Cara membacanya</div><div class="lat">${b.lat}</div></div><div><div class="lbl">Artinya</div><div class="arti">${b.arti}</div></div></div>`;
+    case 'ayat':return `<div>${b.a.map((a,i)=>`<div class="ayat"><span class="num">${i+1}</span><div class="body"><div class="ar" lang="ar" dir="rtl">${a[0]}</div><div class="lat">${a[1]}</div><div class="arti">${a[2]}</div></div></div>`).join('')}</div>`;
+  }
+  return '';
+}
+
+/* ===== Halaman ===== */
+const app=document.getElementById('app');
+const go=h=>{ if(location.hash==='#'+h){route();}else{location.hash=h;} };
+const find=id=>ALLT.find(t=>t.id===id);
+
+function viewHome(){
+  const ts=totalStars();
+  app.innerHTML=`<div class="stack">
+   <div class="top">${mascot(84)}<div><h1>Belajar Agama Yuk!</h1><div class="sub">Persiapan ujian kelas 3 SD</div></div></div>
+   <div class="card s-all"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>Bintang kamu</b><b>${ts} dari ${MAXSTARS}</b></div><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${MAXSTARS}" aria-valuenow="${ts}"><i style="width:${Math.round(ts/MAXSTARS*100)}%"></i></div></div>
+   <div class="how"><div><b>1</b>Baca materinya</div><div><b>2</b>Kerjakan kuis</div><div><b>3</b>Kumpulkan bintang</div></div>
+   <div class="subjects">${SUBJECTS.map(s=>{const st=s.topics.reduce((a,t)=>a+getStars(t.id),0),mx=s.topics.length*3;return `<button class="subj ${s.cls}" data-go="${s.id}"><span class="ar-n" lang="ar" dir="rtl">${s.ar}</span><span class="nm">${s.name}</span><span class="meta">${s.topics.length} materi · ${st}/${mx} bintang</span><span class="bar"><i style="width:${Math.round(st/mx*100)}%"></i></span></button>`;}).join('')}</div>
+   <button class="btn block s-all" data-go="campur" style="--c:#7C3AED">Latihan Ujian Campur (10 soal)</button>
+   <p class="foot">Catatan untuk orang tua: materi disusun dari daftar materi ujian. Bacaan doa, surah, dan angka kulah bisa sedikit berbeda dengan buku guru, jadi cocokkan dengan buku pelajaran ya. Bintang disimpan di browser ini.</p>
+  </div>`;
+}
+
+function viewSubject(s){
+  app.innerHTML=`<div class="stack ${s.cls}">
+   <button class="btn ghost back" data-go="">← Beranda</button>
+   <div><h2 style="color:var(--ct)">${s.name}</h2><div class="sub">${s.topics.length} materi · pilih satu untuk belajar</div></div>
+   <div class="list">${s.topics.map(t=>`<button class="item" data-go="${t.id}"><span class="num">${t.n}</span><span class="tt"><b>${t.t}</b><span>${t.s}</span></span>${starsRow(getStars(t.id))}${arrow}</button>`).join('')}</div>
+   <button class="btn block" data-go="campur-${s.id}">Kuis Campur ${s.name}</button>
+  </div>`;
+}
+
+function viewTopic(t){
+  const s=t.subj,i=s.topics.indexOf(t),prev=s.topics[i-1],next=s.topics[i+1];
+  app.innerHTML=`<div class="stack ${s.cls}">
+   <button class="btn ghost back" data-go="${s.id}">← ${s.name}</button>
+   <div><div class="sub">${s.name} · materi ${t.n} dari ${s.topics.length}</div><h2 style="color:var(--ct)">${t.t}</h2></div>
+   <div class="card lesson"><div class="stack">${t.b.map(block).join('')}</div></div>
+   <button class="btn block" data-go="${t.id}-kuis">Mulai Kuis! ${starsRow(getStars(t.id))}</button>
+   <div class="pager">${prev?`<button class="btn ghost" data-go="${prev.id}">← ${prev.t}</button>`:''}${next?`<button class="btn ghost" data-go="${next.id}">${next.t} →</button>`:''}</div>
+  </div>`;
+}
+
+/* ===== Kuis ===== */
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const prep=q=>{const opts=shuffle([q.right,...q.wrongs]);return {q:q.q,opts,ans:opts.indexOf(q.right),why:q.why};};
+const GOOD=['Hebat!','Pintar sekali!','Benar sekali!','Keren!','Mantap!','Kamu hebat!'];
+const BAD=['Hampir benar!','Tidak apa-apa, ayo coba ingat lagi!','Belum tepat, tapi kamu pasti bisa!'];
+const pickMsg=a=>a[Math.floor(Math.random()*a.length)];
+let quiz=null;
+
+function startQuiz(opts){ quiz={...opts,i:0,score:0,res:[],pick:null,msg:''}; renderQuiz(); }
+
+function renderQuiz(){
+  const z=quiz,n=z.qs.length;
+  if(z.i>=n){return renderResult();}
+  const q=z.qs[z.i],done=z.pick!==null;
+  app.innerHTML=`<div class="stack ${z.cls}">
+   <button class="btn ghost back" data-act="quit">← Keluar kuis</button>
+   <div class="qhead"><div class="dots" aria-hidden="true">${z.qs.map((_,k)=>`<i class="${k<z.res.length?(z.res[k]?'ok':'no'):(k===z.i?'on':'')}"></i>`).join('')}</div><span class="qcount">${z.i+1}/${n}</span></div>
+   <div class="sub">${z.title}</div>
+   <div class="question">${T(q.q)}</div>
+   <div class="opts">${q.opts.map((o,k)=>{let c='opt';if(done){if(k===q.ans)c+=' right';else if(k===z.pick)c+=' wrong';else c+=' dim';}
+     return `<button class="${c}" data-opt="${k}" ${done?'disabled':''}><span class="ltr">${'ABCD'[k]}</span><span class="ot">${T(o)}</span>${done&&k===q.ans?iconOk:''}${done&&k===z.pick&&k!==q.ans?iconNo:''}</button>`;}).join('')}</div>
+   ${done?`<div class="fb ${z.pick===q.ans?'ok':'no'}" role="status">${mascot(54,z.pick===q.ans?'happy':'sad')}<div><h3>${z.msg}</h3><div>${z.pick===q.ans?'':'Jawaban yang benar: <b>'+T(q.opts[q.ans])+'</b>. '}${q.why?T(q.why):''}</div></div></div>
+   <button class="btn block" data-act="next">${z.i+1<n?'Lanjut →':'Lihat hasil'}</button>`:''}
+  </div>`;
+  if(done){const nb=app.querySelector('[data-act="next"]');if(nb&&nb.scrollIntoView)nb.scrollIntoView({block:'nearest',behavior:'smooth'});}
+}
+
+function answer(k){
+  const z=quiz,q=z.qs[z.i];
+  if(z.pick!==null)return;
+  z.pick=k;const ok=k===q.ans;
+  z.res.push(ok);if(ok)z.score++;
+  z.msg=pickMsg(ok?GOOD:BAD);
+  renderQuiz();
+}
+
+function renderResult(){
+  const z=quiz,n=z.qs.length,sc=z.score;
+  const stars=sc===n?3:(sc>=Math.ceil(n*0.6)?2:1);
+  if(z.topic)saveStars(z.topic.id,stars);
+  const msg=stars===3?'Sempurna! Semua jawabanmu benar!':stars===2?'Bagus sekali! Sedikit lagi sempurna.':'Terus semangat! Baca materinya lagi, lalu coba lagi ya.';
+  const t=z.topic,next=t&&t.subj.topics[t.subj.topics.indexOf(t)+1];
+  app.innerHTML=`<div class="stack result ${z.cls}">
+   ${mascot(110,stars>1?'happy':'sad')}
+   <h2>${stars===3?'Hore!':stars===2?'Bagus!':'Ayo semangat!'}</h2>
+   <div class="bigstars" role="img" aria-label="${stars} dari 3 bintang">${[1,2,3].map(i=>star(i<=stars,i<=stars?'pop':'')).join('')}</div>
+   <div class="score">${sc}/${n}</div>
+   <p style="font-weight:800">${msg}</p>
+   <div class="stack" style="width:100%">
+    <button class="btn block" data-act="again">Coba lagi</button>
+    ${t?`<button class="btn ghost block" data-go="${t.id}">Baca materi lagi</button>`:''}
+    ${next?`<button class="btn ghost block" data-go="${next.id}">Materi berikutnya: ${next.t} →</button>`:''}
+    <button class="btn ghost block" data-go="${z.back}">Kembali</button>
+   </div></div>`;
+  if(stars===3)confetti();
+}
+
+function confetti(){
+  const box=document.createElement('div');box.className='conf';box.setAttribute('aria-hidden','true');
+  const cols=['#FFB703','#2563EB','#12945F','#E8590C','#7C3AED','#E64980'];
+  for(let k=0;k<36;k++){const i=document.createElement('i');i.style.left=Math.random()*100+'%';i.style.background=cols[k%cols.length];i.style.animationDuration=(2+Math.random()*2)+'s';i.style.animationDelay=(Math.random()*.6)+'s';box.appendChild(i);}
+  document.body.appendChild(box);setTimeout(()=>box.remove(),4800);
+}
+
+function topicQuiz(t){
+  startQuiz({qs:t.q.map(prep),topic:t,cls:t.subj.cls,title:t.subj.name+' · '+t.t,back:t.subj.id,again:()=>topicQuiz(t)});
+}
+function mixedQuiz(subj,count){
+  const pool=(subj?subj.topics:ALLT).flatMap(t=>t.q);
+  const qs=shuffle(pool).slice(0,count).map(prep);
+  startQuiz({qs,topic:null,cls:subj?subj.cls:'s-all',title:subj?'Kuis campur '+subj.name:'Latihan ujian campur',back:subj?subj.id:'',again:()=>mixedQuiz(subj,count)});
+}
+
+/* ===== Navigasi lewat hash (#fiqih, #fiqih-3, #fiqih-3-kuis, #campur) ===== */
+function route(){
+  const h=decodeURIComponent(location.hash.replace(/^#/,''));
+  window.scrollTo(0,0);
+  if(!h){quiz=null;return viewHome();}
+  if(h==='campur'){return mixedQuiz(null,10);}
+  if(h.startsWith('campur-')){const s=SUBJECTS.find(x=>x.id===h.slice(7));if(s)return mixedQuiz(s,8);}
+  const s=SUBJECTS.find(x=>x.id===h);
+  if(s){quiz=null;return viewSubject(s);}
+  const m=h.match(/^(.+-\d+)(-kuis)?$/);
+  if(m){const t=find(m[1]);if(t){if(m[2])return topicQuiz(t);quiz=null;return viewTopic(t);}}
+  viewHome();
+}
+window.addEventListener('hashchange',route);
+
+app.addEventListener('click',e=>{
+  const el=e.target.closest('[data-go],[data-opt],[data-act]');
+  if(!el)return;
+  if(el.dataset.go!==undefined){go(el.dataset.go);return;}
+  if(el.dataset.opt!==undefined){answer(+el.dataset.opt);return;}
+  const a=el.dataset.act;
+  if(a==='next'){quiz.i++;quiz.pick=null;renderQuiz();window.scrollTo(0,0);}
+  else if(a==='again'){window.scrollTo(0,0);quiz.again();}
+  else if(a==='quit'){const b=quiz.back;quiz=null;go(b);}
+});
+route();
+</script>
+
+</body></html>
